@@ -32,9 +32,7 @@ public class Patient {
 
     private LocalDate dateNaissance;
 
-    @Enumerated(EnumType.STRING)
-    @Column(length = 10)
-    private Sexe sexe;
+
 
     @Column(length = 30)
     private String numTel;
