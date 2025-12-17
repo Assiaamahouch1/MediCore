@@ -3,6 +3,8 @@ package com.example.auth_service.model;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "utilisateurs")
 @Data
@@ -23,7 +25,9 @@ public class Utilisateur {
     private String prenom;
     private String numTel;
     private String signature;
-    private boolean actif = true;// pour désactiver un compte sans le supprimer
+    private String activationToken;        // On le renomme mentalement en "resetToken"
+    private LocalDateTime tokenExpiryDate;
+    private boolean actif = false;         // On garde actif = true pour les comptes normaux
     private Long cabinetId;
 
 }
