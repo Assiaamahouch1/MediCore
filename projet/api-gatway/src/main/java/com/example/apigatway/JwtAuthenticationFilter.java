@@ -30,11 +30,15 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
 
             // Chemins publics : login, register, actuator, swagger, etc.
             if (path.startsWith("/api/auth/login") ||
+                    path.startsWith("/api/auth/register") ||
+                    path.startsWith("/api/auth/forgot-password") ||
+                    path.startsWith("/api/auth/reset-password") ||
                     path.startsWith("/actuator") ||
                     path.contains("swagger") ||
                     path.contains("v3/api-docs")) {
                 return chain.filter(exchange);
             }
+
 
             // Vérifier le header Authorization
             if (!request.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
