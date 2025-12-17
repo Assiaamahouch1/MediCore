@@ -15,7 +15,7 @@ public class Utilisateur {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // <-- important
     private Long id;
 
-    private String email;
+    private String username;
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
