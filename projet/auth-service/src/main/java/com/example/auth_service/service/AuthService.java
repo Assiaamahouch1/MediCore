@@ -119,4 +119,5 @@ public class AuthService {
 
         utilisateurRepository.save(user);
     }
+
 }

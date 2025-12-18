@@ -54,4 +54,6 @@ public class AuthController {
         authService.completePasswordReset(token, request);
         return ResponseEntity.ok("Mot de passe réinitialisé avec succès ! Vous pouvez vous connecter.");
     }
+
+
 }

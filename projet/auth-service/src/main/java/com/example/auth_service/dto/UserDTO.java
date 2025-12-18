@@ -1,25 +1,25 @@
-package com.example.auth_service.model;
+package com.example.auth_service.dto;
 
+import com.example.auth_service.model.Role;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "utilisateurs")
+/**
+ * @author sawssan
+ **/
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class Utilisateur {
+public class UserDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // <-- important
     private Long id;
     private String avatar;
     private String username;
     private String password;
-    @Enumerated(EnumType.STRING)
     private Role role;
     private String nom;
     private String prenom;
@@ -29,5 +29,4 @@ public class Utilisateur {
     private LocalDateTime tokenExpiryDate;
     private boolean actif = false;         // On garde actif = true pour les comptes normaux
     private Long cabinetId;
-
 }
