@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService{
             Files.copy(image.getInputStream(), fileStorageLocation.resolve(filename), REPLACE_EXISTING);
             return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/admin/image/" + filename).toUriString();
+                    .path("/admins/image/" + filename).toUriString();
         }catch (Exception exception) {
             throw new RuntimeException("Unable to save image");
         }
