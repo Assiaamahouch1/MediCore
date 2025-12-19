@@ -34,6 +34,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                         .requestMatchers("/api/auth/forgot-password").permitAll()
                         .requestMatchers("/api/auth/reset-password/**").permitAll()
+                        .requestMatchers("/api/auth/image/**").permitAll()
                         .requestMatchers("/admins/**").authenticated()
                         .anyRequest().authenticated()
                 )

@@ -3,25 +3,39 @@ package com.example.auth_service.service;
 
 
 
-import com.example.auth_service.dto.ForgotPasswordRequest;
-import com.example.auth_service.dto.RegisterRequest;
-import com.example.auth_service.dto.ResetPasswordRequest;
+import com.example.auth_service.dto.*;
+import com.example.auth_service.exception.ResourceNotFoundException;
+import com.example.auth_service.mapper.UserMapper;
 import com.example.auth_service.model.Role;
 import com.example.auth_service.repository.UtilisateurRepository;
 
 import com.example.auth_service.config.JwtUtils;
-import com.example.auth_service.dto.LoginRequest;
 
 import com.example.auth_service.model.Utilisateur;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 
+import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY;
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+
+@Slf4j
 @Service
 public class AuthService {
 
@@ -32,6 +46,10 @@ public class AuthService {
     private JwtUtils jwtUtils;
     @Autowired
     private EmailService emailService;
+    @Autowired
+    private UtilisateurRepository repository;
+    @Autowired
+    private UserMapper mapper;
 
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -119,5 +137,79 @@ public class AuthService {
 
         utilisateurRepository.save(user);
     }
+    public Utilisateur getCurrentUserInfo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        if (auth == null || !auth.isAuthenticated()) {
+            throw new RuntimeException("Aucun utilisateur authentifié");
+        }
+
+        String username = auth.getName();
+        Utilisateur user = utilisateurRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Utilisateur introuvable"));
+
+        return mapToUserInfoResponse(user);
+    }
+
+    private Utilisateur mapToUserInfoResponse(Utilisateur user) {
+        Utilisateur response = new Utilisateur();
+        response.setUsername(user.getUsername());
+        response.setNom(user.getNom());
+        response.setPrenom(user.getPrenom());
+        response.setNumTel(user.getNumTel());
+        response.setAvatar(user.getAvatar());
+        response.setId(user.getId());
+        return response;
+    }
+
+    public String uploadImage(Long adminId, MultipartFile file) {
+        log.info("Saving picture for user ID: {}", adminId);
+        Utilisateur admin= utilisateurRepository.findById(adminId)
+                .orElseThrow(()->
+                        new ResourceNotFoundException("User is not exist"+adminId));
+        String imageUrl = imageFunction.apply(String.valueOf(adminId), file);
+        admin.setAvatar(imageUrl);
+        utilisateurRepository.save(admin);
+        return imageUrl;
+    }
+
+    private final Function<String, String> fileExtension = filename -> Optional.of(filename).filter(name -> name.contains("."))
+            .map(name -> "." + name.substring(filename.lastIndexOf(".") + 1)).orElse(".jpg");
+
+    private final BiFunction<String, MultipartFile, String> imageFunction = (id, image) -> {
+        String filename = id + fileExtension.apply(image.getOriginalFilename());
+        try {
+            Path fileStorageLocation = Paths.get(IMAGE_DIRECTORY).toAbsolutePath().normalize();
+            if(!Files.exists(fileStorageLocation)) { Files.createDirectories(fileStorageLocation); }
+            Files.copy(image.getInputStream(), fileStorageLocation.resolve(filename), REPLACE_EXISTING);
+            return ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/api/auth/image/" + filename).toUriString();
+        }catch (Exception exception) {
+            throw new RuntimeException("Unable to save image");
+        }
+    };
+
+    public UserDTO updateSuperAdmin(Long id, UserDTO dto) {
+        Utilisateur entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Utilisateur not found with id " + id));
+
+
+        if (dto.getUsername() != null) {
+            entity.setUsername(dto.getUsername());
+        }
+        if (dto.getNom() != null) {
+            entity.setNom(dto.getNom());
+        }
+        if (dto.getPrenom() != null) {
+            entity.setPrenom(dto.getPrenom());
+        }
+        if (dto.getNumTel() != null) {
+            entity.setNumTel(dto.getNumTel());
+        }
+        if (dto.getAvatar() != null) {
+            entity.setAvatar(dto.getAvatar());
+        }
+        return mapper.toDTO(repository.save(entity));
+    }
 }
