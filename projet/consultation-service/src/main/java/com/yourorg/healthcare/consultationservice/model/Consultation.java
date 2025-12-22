@@ -8,9 +8,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "consultations", indexes = {
-        @Index(name = "idx_consultations_patient_id", columnList = "patientId"),
-        @Index(name = "idx_consultations_doctor_id", columnList = "doctorId"),
-        @Index(name = "idx_consultations_date", columnList = "date")
+        @Index(name = "idx_consultation_patient", columnList = "patientId"),
+        @Index(name = "idx_consultation_medecin", columnList = "medecinId"),
+        @Index(name = "idx_consultation_date", columnList = "dateConsultation")
 })
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class Consultation {
@@ -19,23 +19,35 @@ public class Consultation {
     @Column(nullable = false, updatable = false)
     private UUID id;
 
+    @Column(length = 50)
+    private String type;
+
+    @Column(nullable = false)
+    private Instant dateConsultation;
+
+    @Column(length = 2000)
+    private String examenClinique;
+
+    @Column(length = 2000)
+    private String examenComplementaire;
+
+    @Column(length = 1000)
+    private String diagnostic;
+
+    @Column(length = 2000)
+    private String traitement;
+
+    @Column(length = 2000)
+    private String observations;
+
     @Column(nullable = false)
     private UUID patientId;
 
     @Column(nullable = false)
-    private UUID doctorId;
+    private UUID medecinId;
 
-    @Column(nullable = false)
-    private Instant date;
-
-    @Column(length = 1000)
-    private String notes;
-
-    @Column(length = 255)
-    private String diagnosis;
-
-    @Column(length = 255)
-    private String prescription; // ex: texte libre ou référence
+    private UUID rendezVousId;
+    private UUID dossierMedicalId;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
@@ -47,8 +59,8 @@ public class Consultation {
     void prePersist() {
         if (id == null) id = UUID.randomUUID();
         Instant now = Instant.now();
+        if (dateConsultation == null) dateConsultation = now;
         createdAt = now; updatedAt = now;
-        if (date == null) date = now;
     }
 
     @PreUpdate
