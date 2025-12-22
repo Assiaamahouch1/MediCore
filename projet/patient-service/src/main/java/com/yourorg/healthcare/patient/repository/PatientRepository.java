@@ -26,4 +26,6 @@ public interface PatientRepository extends JpaRepository<Patient, UUID> {
     Page<Patient> searchActive(@Param("q") String query, Pageable pageable);
 
     Optional<Patient> findByIdAndActifTrue(UUID id);
+    Page<Patient> findByNomContainingIgnoreCase(String nom, Pageable pageable);
+    boolean existsByCin(String cin);
 }

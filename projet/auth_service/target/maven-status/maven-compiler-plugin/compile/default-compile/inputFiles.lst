@@ -1,0 +1,11 @@
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\config\SecurityConfig.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\config\JwtUtils.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\dto\RegisterRequest.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\controller\AuthController.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\repository\UtilisateurRepository.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\config\JwtAuthFilter.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\dto\LoginRequest.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\AuthServiceApplication.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\service\AuthService.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\model\Utilisateur.java
+C:\Users\souad\IdeaProjects\projet\projet\MediCore\projet\auth_service\src\main\java\com\example\auth_service\model\Role.java
