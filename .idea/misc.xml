@@ -11,6 +11,8 @@
         <option value="$PROJECT_DIR$/projet/rendezVous-service/pom.xml" />
         <option value="$PROJECT_DIR$/projet/auth_service/pom.xml" />
         <option value="$PROJECT_DIR$/projet/api-gatway/pom.xml" />
+        <option value="$PROJECT_DIR$/projet/api-gateway/pom.xml" />
+        <option value="$PROJECT_DIR$/projet/auth-service/pom.xml" />
       </list>
     </option>
   </component>

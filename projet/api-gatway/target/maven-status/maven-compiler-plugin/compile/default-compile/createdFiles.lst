@@ -1,5 +1,0 @@
-com\example\apigatway\JwtAuthenticationFilter.class
-com\example\apigatway\JwtUtils.class
-com\example\apigatway\GatewayConfig.class
-com\example\apigatway\ApiGatwayApplication.class
-com\example\apigatway\JwtAuthenticationFilter$Config.class
