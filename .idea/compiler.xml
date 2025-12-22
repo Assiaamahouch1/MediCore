@@ -6,13 +6,32 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="patient-service" />
+        <module name="cabinet-service" />
+        <module name="rendezVous-service" />
+        <module name="facture-service" />
+      </profile>
+      <profile name="Annotation profile for consultation-service" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.30/lombok-1.18.30.jar" />
+        </processorPath>
+        <module name="api-gateway" />
         <module name="consultation-service" />
+        <module name="auth-service" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="api-gateway" options="" />
+      <module name="auth-service" options="" />
+      <module name="cabinet-service" options="" />
       <module name="consultation-service" options="-parameters" />
+      <module name="facture-service" options="-parameters" />
+      <module name="rendezVous-service" options="-parameters" />
     </option>
   </component>
 </project>
