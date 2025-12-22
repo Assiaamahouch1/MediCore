@@ -4,6 +4,4 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-public record SubscriptionSetExpirationRequest(
-        @NotNull LocalDate expirationDate
-) { }
+public record SubscriptionSetExpirationRequest(@NotNull LocalDate expirationDate) {}
