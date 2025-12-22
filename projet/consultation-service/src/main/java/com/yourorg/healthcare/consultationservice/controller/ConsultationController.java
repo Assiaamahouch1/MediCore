@@ -20,10 +20,12 @@ public class ConsultationController {
     public ConsultationController(ConsultationService service) { this.service = service; }
 
     @GetMapping
-    public Page<ConsultationResponse> list(@RequestParam(required=false) Integer page,
+    public Page<ConsultationResponse> list(@RequestParam(required=false) UUID patientId,
+                                           @RequestParam(required=false) UUID medecinId,
+                                           @RequestParam(required=false) Integer page,
                                            @RequestParam(required=false) Integer size,
                                            @RequestParam(required=false) String sort) {
-        return service.list(page, size, sort);
+        return service.list(patientId, medecinId, page, size, sort);
     }
 
     @GetMapping("/{id}")
