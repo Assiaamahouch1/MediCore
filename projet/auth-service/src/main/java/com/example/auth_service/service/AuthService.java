@@ -1,8 +1,5 @@
 package com.example.auth_service.service;
 
-
-
-
 import com.example.auth_service.dto.*;
 import com.example.auth_service.exception.ResourceNotFoundException;
 import com.example.auth_service.mapper.UserMapper;
