@@ -1,6 +1,5 @@
 package com.example.auth_service.config;
 
-import com.example.auth_service.config.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,14 +27,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        http.cors(cors -> cors.configurationSource(corsConfigurationSource())) // ← AJOUTER CETTE LIGNE
-                .csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/login", "/api/auth/register").permitAll()
                         .requestMatchers("/api/auth/forgot-password").permitAll()
                         .requestMatchers("/api/auth/reset-password/**").permitAll()
-                        .requestMatchers("/api/auth/image/**").permitAll()
-                        .requestMatchers("/admins/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session

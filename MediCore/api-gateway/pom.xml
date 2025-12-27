@@ -28,12 +28,6 @@
             <artifactId>spring-cloud-starter-gateway</artifactId>
             <version>4.1.4</version> <!-- Version récente compatible -->
         </dependency>
-        <!-- Tests Spring Boot (JUnit 5) -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
 
 
 
@@ -64,6 +58,13 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter-netflix-eureka-client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+            <version>4.3.0</version>
+        </dependency>
+
     </dependencies>
 
     <!-- Gestion des versions Spring Cloud (BOM) -->

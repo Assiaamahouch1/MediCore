@@ -42,4 +42,34 @@ public class EmailService {
 
         mailSender.send(message);
     }
+    public void sendAccountCreationEmail(String toEmail, String token, String fullName) {
+        String activationLink = "http://localhost:4200/reset-password/" + token;
+
+        String subject = "Bienvenue - Créez votre mot de passe";
+
+        String content = """
+            Bonjour %s,
+
+            Votre compte administrateur a été créé avec succès sur l'application Gestion Cabinet Médical.
+
+            Pour activer votre compte, veuillez cliquer sur le lien ci-dessous et définir votre mot de passe :
+
+            %s
+
+            ⚠️ Ce lien est valable uniquement pendant 24 heures.
+
+            Pour toute question, n'hésitez pas à contacter l'équipe technique.
+
+            Cordialement,
+            L'équipe Gestion Cabinet Médical
+            """.formatted(fullName, activationLink);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject(subject);
+        message.setText(content);
+        message.setFrom("no-reply@cabinetmedical.com");
+
+        mailSender.send(message);
+    }
 }

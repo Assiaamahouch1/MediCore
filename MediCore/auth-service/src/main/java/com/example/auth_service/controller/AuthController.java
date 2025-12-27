@@ -6,6 +6,7 @@ package com.example.auth_service.controller;
 import com.example.auth_service.dto.*;
 import com.example.auth_service.model.Utilisateur;
 import com.example.auth_service.service.AuthService;
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,6 +19,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY;
+import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY_SUPERADMIN;
 import static org.springframework.util.MimeTypeUtils.IMAGE_JPEG_VALUE;
 import static org.springframework.util.MimeTypeUtils.IMAGE_PNG_VALUE;
 
@@ -42,10 +44,9 @@ public class AuthController {
     public List<Utilisateur> all(){
         return authService.all();
     }
-    // 1. Demander le lien de réinitialisation
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/forgot-password")
-    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) {
+    public ResponseEntity<String> forgotPassword(@RequestBody ForgotPasswordRequest request) throws MessagingException {
         authService.initiatePasswordReset(request.getUsername());
         return ResponseEntity.ok("Si un compte existe avec cet identifiant, un email de réinitialisation a été envoyé.");
     }
@@ -65,15 +66,15 @@ public class AuthController {
         Utilisateur userInfo = authService.getCurrentUserInfo();
         return ResponseEntity.ok(userInfo);
     }
-    @PutMapping("/image")
-    public ResponseEntity<String> uploadImage(@RequestParam("id") Long id, @RequestParam("file") MultipartFile file) {
+    @PutMapping("/superadmin/image")
+    public ResponseEntity<String> uploadImageSuperAdmin(@RequestParam("id") Long id, @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok().body(authService.uploadImage(id, file));
     }
-    @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
-    public byte[] getImage(@PathVariable("filename") String filename) throws IOException {
-        return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));
+    @GetMapping(path = "/superadmin/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
+    public byte[] getImageSuperAdmin(@PathVariable("filename") String filename) throws IOException {
+        return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY_SUPERADMIN + filename));
     }
-    @PutMapping("/{id}")
+    @PutMapping("/superadmin/{id}")
     public UserDTO updateSuperAdmin(@PathVariable Long id, @RequestBody UserDTO dto) {
         return authService.updateSuperAdmin(id, dto);
     }
