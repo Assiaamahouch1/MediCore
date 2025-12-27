@@ -1,7 +1,6 @@
 package com.example.auth_service.dto;
 
 import com.example.auth_service.model.Role;
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

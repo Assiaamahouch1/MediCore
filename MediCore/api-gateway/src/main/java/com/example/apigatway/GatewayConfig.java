@@ -77,6 +77,7 @@ public class GatewayConfig {
                         .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
                         .uri("http://localhost:8084"))
                 .build();
+
     }
 
     // Configuration CORS réactive (correcte pour Gateway)
