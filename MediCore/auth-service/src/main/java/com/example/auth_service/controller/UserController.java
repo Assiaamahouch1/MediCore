@@ -2,12 +2,9 @@ package com.example.auth_service.controller;
 
 import com.example.auth_service.dto.UserDTO;
 import com.example.auth_service.service.UserService;
-import com.example.auth_service.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +33,7 @@ public class UserController {
         return userService.createAdmin(dto);
     }
 
+
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('SUPERADMIN')")
     public UserDTO getByIdAdmin(@PathVariable Long id) {
@@ -59,6 +57,7 @@ public class UserController {
     public void deleteAdmin(@PathVariable Long id) {
         userService.deleteAdmin(id);
     }
+
     @PreAuthorize("hasRole('SUPERADMIN')")
     @PutMapping("/image")
     public ResponseEntity<String> uploadImage(@RequestParam("id") Long id, @RequestParam("file") MultipartFile file) {
@@ -69,4 +68,5 @@ public class UserController {
     public byte[] getImage(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));
     }
+
 }

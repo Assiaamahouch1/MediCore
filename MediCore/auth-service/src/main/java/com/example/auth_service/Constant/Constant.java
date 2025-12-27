@@ -5,4 +5,6 @@ package com.example.auth_service.Constant;
  **/
 public class Constant {
     public static final String IMAGE_DIRECTORY=System.getProperty("user.home")+"/OneDrive/Images/uploads/";
+    public static final String IMAGE_DIRECTORY_SUPERADMIN=System.getProperty("user.home")+"/OneDrive/Images/uploads-superadmin/";
+
 }

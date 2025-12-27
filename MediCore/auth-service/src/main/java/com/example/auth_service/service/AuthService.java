@@ -32,7 +32,7 @@ import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY;
+import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY_SUPERADMIN;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Slf4j
@@ -159,6 +159,8 @@ public class AuthService {
         response.setNumTel(user.getNumTel());
         response.setAvatar(user.getAvatar());
         response.setId(user.getId());
+        response.setRole(user.getRole());
+        response.setCabinetId(user.getCabinetId());
         return response;
     }
 
@@ -179,12 +181,10 @@ public class AuthService {
     private final BiFunction<String, MultipartFile, String> imageFunction = (id, image) -> {
         String filename = id + fileExtension.apply(image.getOriginalFilename());
         try {
-            Path fileStorageLocation = Paths.get(IMAGE_DIRECTORY).toAbsolutePath().normalize();
+            Path fileStorageLocation = Paths.get(IMAGE_DIRECTORY_SUPERADMIN).toAbsolutePath().normalize();
             if(!Files.exists(fileStorageLocation)) { Files.createDirectories(fileStorageLocation); }
             Files.copy(image.getInputStream(), fileStorageLocation.resolve(filename), REPLACE_EXISTING);
-            return ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/api/auth/image/" + filename).toUriString();
+            return filename;
         }catch (Exception exception) {
             throw new RuntimeException("Unable to save image");
         }

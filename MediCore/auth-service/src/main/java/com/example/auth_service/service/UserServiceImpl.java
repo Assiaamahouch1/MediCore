@@ -7,8 +7,8 @@ import com.example.auth_service.model.Role;
 import com.example.auth_service.model.Utilisateur;
 import com.example.auth_service.repository.UtilisateurRepository;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +20,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -33,12 +34,16 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
-    private final UtilisateurRepository repository;
+    @Autowired
+    private UtilisateurRepository repository;
+
     private final UserMapper mapper;
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
+    @Autowired
+    private EmailService emailService;
     @Override
     public UserDTO createAdmin(UserDTO dto) {
         if(repository.existsByUsername(dto.getUsername())) // ← change ici
@@ -48,9 +53,23 @@ public class UserServiceImpl implements UserService{
         entity.setNom(dto.getNom());
         entity.setPrenom(dto.getPrenom());
         entity.setNumTel(dto.getNumTel());
-        entity.setPassword(passwordEncoder.encode(dto.getPassword()));
+
+        String tempPassword = UUID.randomUUID().toString();
+        entity.setPassword(passwordEncoder.encode(tempPassword));
+
         entity.setRole(Role.ADMIN);
+        entity.setActif(true);
+        String token = UUID.randomUUID().toString();
+        entity.setActivationToken(token);
+        entity.setTokenExpiryDate(LocalDateTime.now().plusHours(24));
         Utilisateur saved = repository.save(entity);
+        String fullName = saved.getPrenom() + " " + saved.getNom();
+        try {
+            emailService.sendAccountCreationEmail(saved.getUsername(), token, fullName);
+            log.info("Email de création envoyé à {}", saved.getUsername());
+        } catch (Exception e) {
+            log.error(" Erreur envoi email à {}: {}", saved.getUsername(), e.getMessage());
+        }
         return mapper.toDTO(saved);
     }
 
@@ -117,9 +136,7 @@ public class UserServiceImpl implements UserService{
             Path fileStorageLocation = Paths.get(IMAGE_DIRECTORY).toAbsolutePath().normalize();
             if(!Files.exists(fileStorageLocation)) { Files.createDirectories(fileStorageLocation); }
             Files.copy(image.getInputStream(), fileStorageLocation.resolve(filename), REPLACE_EXISTING);
-            return ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path("/admins/image/" + filename).toUriString();
+            return filename;
         }catch (Exception exception) {
             throw new RuntimeException("Unable to save image");
         }
