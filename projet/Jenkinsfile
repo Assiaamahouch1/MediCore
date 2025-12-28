@@ -1,0 +1,62 @@
+pipeline {
+  agent any
+
+  environment {
+    JAVA_HOME = tool name: 'jdk17', type: 'jdk'
+    MAVEN_HOME = tool name: 'maven3', type: 'maven'
+    PATH = "${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${env.PATH}"
+  }
+
+  options {
+    timestamps()
+    ansiColor('xterm')
+    buildDiscarder(logRotator(numToKeepStr: '20'))
+  }
+
+  stages {
+    stage('Checkout') {
+      steps {
+        checkout scm
+      }
+    }
+
+    stage('Build & Unit Tests') {
+      steps {
+        sh 'mvn -B -DskipTests=false clean test'
+      }
+      post {
+        always {
+          junit '**/target/surefire-reports/*.xml'
+        }
+      }
+    }
+
+    stage('Package') {
+      steps {
+        sh 'mvn -B -DskipTests package'
+      }
+      post {
+        success {
+          archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+        }
+      }
+    }
+
+    // Exemple: builds en parallèle (ajoute quand prêt)
+    // stage('Docker/Jib Images') {
+    //   parallel {
+    //     stage('api-gateway') {
+    //       steps { sh 'mvn -B -pl api-gateway -am jib:build -Dimage=registry.example.com/medicore/api-gateway:${BUILD_NUMBER}' }
+    //     }
+    //     stage('patient-service') {
+    //       steps { sh 'mvn -B -pl patient-service -am jib:build -Dimage=registry.example.com/medicore/patient-service:${BUILD_NUMBER}' }
+    //     }
+    //   }
+    // }
+  }
+
+  post {
+    success { echo 'Build SUCCESS' }
+    failure { echo 'Build FAILED' }
+  }
+}
