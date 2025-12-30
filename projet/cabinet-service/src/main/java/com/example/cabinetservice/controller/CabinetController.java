@@ -3,9 +3,12 @@ package com.example.cabinetservice.controller;
 import com.example.cabinetservice.dto.*;
 import com.example.cabinetservice.service.CabinetService;
 import jakarta.validation.Valid;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
 
@@ -64,5 +67,19 @@ public class CabinetController {
     @GetMapping("/{id}/subscription/status")
     public SubscriptionStatusResponse status(@PathVariable Long id) {
         return service.status(id);
+    }
+    @PutMapping("/logo")
+    public ResponseEntity<String> uploadLogo(@RequestParam("id") Long id,
+                                             @RequestParam("file") MultipartFile file) {
+        String filename = service.uploadLogo(id, file);
+        return ResponseEntity.ok(filename);
+    }
+
+    @GetMapping("/logo/{filename}")
+    public ResponseEntity<Resource> getLogo(@PathVariable String filename) {
+        Resource resource = service.getLogo(filename);
+        return ResponseEntity.ok()
+                .contentType(MediaType.IMAGE_JPEG) // ou déterminer dynamiquement
+                .body(resource);
     }
 }

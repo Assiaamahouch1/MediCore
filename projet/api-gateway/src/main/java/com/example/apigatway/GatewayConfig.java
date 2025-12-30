@@ -28,7 +28,7 @@ public class GatewayConfig {
                         .filters(f -> f
                                 .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
                         )
-                        .uri("http://localhost:8080"))
+                        .uri("http://localhost:8087"))
 
                 // CABINET-SERVICE → On laisse /cabinets/** sans stripPrefix
                 .route("cabinet-service", r -> r
