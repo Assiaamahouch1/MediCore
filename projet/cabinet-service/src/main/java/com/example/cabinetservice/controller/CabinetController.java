@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/cabinets")
+@RequestMapping("/api/cabinets")
 public class CabinetController {
 
     private final CabinetService service;

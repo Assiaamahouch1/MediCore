@@ -32,7 +32,7 @@ public class GatewayConfig {
 
                 // CABINET-SERVICE → On laisse /cabinets/** sans stripPrefix
                 .route("cabinet-service", r -> r
-                        .path("/cabinets/**")
+                        .path("/api/cabinets/**")
                         .filters(f -> f
                                 .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
                         )
