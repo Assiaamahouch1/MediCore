@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -112,6 +113,16 @@ public class CabinetService {
         expired.forEach(c -> c.setService_actif(Boolean.FALSE));
         repo.saveAll(expired);
         return expired.size();
+    }
+
+    // Récupérer les cabinets qui expirent dans X jours (pour les alertes admin)
+    public List<CabinetResponse> getExpiringCabinets(int daysBeforeExpiration) {
+        LocalDate today = LocalDate.now();
+        LocalDate threshold = today.plusDays(daysBeforeExpiration);
+        return repo.findExpiringCabinets(today, threshold)
+                .stream()
+                .map(mapper::toResponse)
+                .toList();
     }
     @Value("${cabinet.logo.upload-dir:uploads/logos}")
     private String uploadDir;

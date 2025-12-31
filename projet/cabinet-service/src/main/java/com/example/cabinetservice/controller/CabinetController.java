@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cabinets")
@@ -68,6 +69,14 @@ public class CabinetController {
     public SubscriptionStatusResponse status(@PathVariable Long id) {
         return service.status(id);
     }
+
+    // Endpoint pour récupérer les cabinets qui expirent bientôt (alertes admin)
+    @GetMapping("/alerts/expiring")
+    public List<CabinetResponse> getExpiringAlerts(
+            @RequestParam(defaultValue = "7") int days) {
+        return service.getExpiringCabinets(days);
+    }
+
     @PutMapping("/logo")
     public ResponseEntity<String> uploadLogo(@RequestParam("id") Long id,
                                              @RequestParam("file") MultipartFile file) {
