@@ -25,9 +25,9 @@ public class Utilisateur {
     private String prenom;
     private String numTel;
     private String signature;
-    private String activationToken;        // On le renomme mentalement en "resetToken"
+    private String activationToken;
     private LocalDateTime tokenExpiryDate;
-    private boolean actif = false;         // On garde actif = true pour les comptes normaux
+    private boolean actif = false;
     private Long cabinetId;
 
 }
