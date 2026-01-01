@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-24T00:01:29+0100",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
+    date = "2026-01-01T00:32:54+0100",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.44.0.v20251118-1623, environment: Java 21.0.9 (Eclipse Adoptium)"
 )
 @Component
 public class UserMapperImpl implements UserMapper {
@@ -22,18 +22,18 @@ public class UserMapperImpl implements UserMapper {
         UserDTO userDTO = new UserDTO();
 
         userDTO.setAvatar( user.getAvatar() );
-        userDTO.setId( user.getId() );
-        userDTO.setUsername( user.getUsername() );
-        userDTO.setPassword( user.getPassword() );
-        userDTO.setRole( user.getRole() );
-        userDTO.setNom( user.getNom() );
-        userDTO.setPrenom( user.getPrenom() );
-        userDTO.setNumTel( user.getNumTel() );
-        userDTO.setSignature( user.getSignature() );
-        userDTO.setActivationToken( user.getActivationToken() );
-        userDTO.setTokenExpiryDate( user.getTokenExpiryDate() );
         userDTO.setActif( user.isActif() );
+        userDTO.setActivationToken( user.getActivationToken() );
         userDTO.setCabinetId( user.getCabinetId() );
+        userDTO.setId( user.getId() );
+        userDTO.setNom( user.getNom() );
+        userDTO.setNumTel( user.getNumTel() );
+        userDTO.setPassword( user.getPassword() );
+        userDTO.setPrenom( user.getPrenom() );
+        userDTO.setRole( user.getRole() );
+        userDTO.setSignature( user.getSignature() );
+        userDTO.setTokenExpiryDate( user.getTokenExpiryDate() );
+        userDTO.setUsername( user.getUsername() );
 
         return userDTO;
     }
@@ -46,18 +46,18 @@ public class UserMapperImpl implements UserMapper {
 
         Utilisateur.UtilisateurBuilder utilisateur = Utilisateur.builder();
 
-        utilisateur.id( dto.getId() );
-        utilisateur.avatar( dto.getAvatar() );
-        utilisateur.username( dto.getUsername() );
-        utilisateur.role( dto.getRole() );
-        utilisateur.nom( dto.getNom() );
-        utilisateur.prenom( dto.getPrenom() );
-        utilisateur.numTel( dto.getNumTel() );
-        utilisateur.signature( dto.getSignature() );
-        utilisateur.activationToken( dto.getActivationToken() );
-        utilisateur.tokenExpiryDate( dto.getTokenExpiryDate() );
         utilisateur.actif( dto.isActif() );
+        utilisateur.activationToken( dto.getActivationToken() );
+        utilisateur.avatar( dto.getAvatar() );
         utilisateur.cabinetId( dto.getCabinetId() );
+        utilisateur.id( dto.getId() );
+        utilisateur.nom( dto.getNom() );
+        utilisateur.numTel( dto.getNumTel() );
+        utilisateur.prenom( dto.getPrenom() );
+        utilisateur.role( dto.getRole() );
+        utilisateur.signature( dto.getSignature() );
+        utilisateur.tokenExpiryDate( dto.getTokenExpiryDate() );
+        utilisateur.username( dto.getUsername() );
 
         return utilisateur.build();
     }

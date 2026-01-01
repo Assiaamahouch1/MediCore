@@ -14,4 +14,5 @@ public interface PatientRepository extends JpaRepository<Patient, UUID> {
     List<Patient> findByActifTrue();
     List<Patient> findByActifFalse();
 
+    Patient findByEmail(String username);
 }

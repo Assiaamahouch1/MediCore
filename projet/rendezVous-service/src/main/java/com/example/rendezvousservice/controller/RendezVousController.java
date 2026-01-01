@@ -1,10 +1,14 @@
 package com.example.rendezvousservice.controller;
 
 import com.example.rendezvousservice.dto.RendezVousDTO;
+import com.example.rendezvousservice.dto.RendezVousUpdateRequest;
+import com.example.rendezvousservice.model.RendezVous;
 import com.example.rendezvousservice.service.RendezVousService;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author sawssan
@@ -20,27 +24,37 @@ public class RendezVousController {
     }
 
     @PostMapping
-    public RendezVousDTO create(@RequestBody RendezVousDTO dto) {
-        return service.create(dto);
+    public RendezVous creerRendezVous(@RequestBody RendezVous rdv) {
+        return service.creerRendezVous(rdv);
     }
 
-    @GetMapping("/{id}")
-    public RendezVousDTO getById(@PathVariable Long id) {
-        return service.getById(id);
+    @PutMapping("/annuler/{id}")
+    public String annulerRdv(@PathVariable Long id) {
+        boolean result = service.annulerRendezVous(id);
+        return result ? "Rendez-vous annulé" : "Rendez-vous introuvable";
     }
-
-    @GetMapping
-    public List<RendezVousDTO> getAll() {
+    @GetMapping("/all")
+    public List<RendezVous> getAllRendezVous() {
         return service.getAll();
     }
+    @PatchMapping("/{id}/modifier-partiel")
+    public ResponseEntity<RendezVous> modifierRendezVousPartiel(
+            @PathVariable Long id,
+            @RequestBody RendezVousUpdateRequest request) {
 
-    @PutMapping("/{id}")
-    public RendezVousDTO update(@PathVariable Long id, @RequestBody RendezVousDTO dto) {
-        return service.update(id, dto);
-    }
+        Optional<RendezVous> updated = service.modifierRendezVousPartiel(
+                id,
+                request.getDateRdv(),
+                request.getHeureRdv(),
+                request.getMotif(),
+                request.getNotes()
+        );
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+        if (updated.isPresent()) {
+            return ResponseEntity.ok(updated.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }
+

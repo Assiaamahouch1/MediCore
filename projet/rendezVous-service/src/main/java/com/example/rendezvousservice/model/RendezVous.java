@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author sawssan
@@ -27,7 +28,7 @@ public class RendezVous {
     private StatutRdv statut;
 
     private String notes;
-    private Long patientId;
+    private UUID patientId;
     private Long userId;
 
 
