@@ -3,6 +3,7 @@ package com.example.factureservice.mapper;
 import com.example.factureservice.dto.FactureDTO;
 import com.example.factureservice.model.Facture;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 /**
@@ -10,8 +11,7 @@ import org.mapstruct.factory.Mappers;
  **/
 @Mapper(componentModel = "spring")
 public interface FactureMapper {
-    FactureMapper INSTANCE = Mappers.getMapper(FactureMapper.class);
-
+    @Mapping(target = "date", source = "date")
     FactureDTO toDTO(Facture facture);
     Facture toEntity(FactureDTO dto);
 }

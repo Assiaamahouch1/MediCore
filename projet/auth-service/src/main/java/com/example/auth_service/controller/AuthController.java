@@ -1,8 +1,5 @@
 package com.example.auth_service.controller;
 
-
-
-
 import com.example.auth_service.dto.*;
 import com.example.auth_service.model.Utilisateur;
 import com.example.auth_service.service.AuthService;

@@ -7,8 +7,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2025-12-24T00:17:13+0100",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.2 (Oracle Corporation)"
+    date = "2026-01-01T02:27:50+0100",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.9 (Microsoft)"
 )
 @Component
 public class FactureMapperImpl implements FactureMapper {
@@ -21,6 +21,12 @@ public class FactureMapperImpl implements FactureMapper {
 
         FactureDTO factureDTO = new FactureDTO();
 
+        factureDTO.setDate( facture.getDate() );
+        factureDTO.setIdFacture( facture.getIdFacture() );
+        factureDTO.setMontant( facture.getMontant() );
+        factureDTO.setModePaiement( facture.getModePaiement() );
+        factureDTO.setRendezVousId( facture.getRendezVousId() );
+
         return factureDTO;
     }
 
@@ -31,6 +37,12 @@ public class FactureMapperImpl implements FactureMapper {
         }
 
         Facture facture = new Facture();
+
+        facture.setIdFacture( dto.getIdFacture() );
+        facture.setMontant( dto.getMontant() );
+        facture.setModePaiement( dto.getModePaiement() );
+        facture.setRendezVousId( dto.getRendezVousId() );
+        facture.setDate( dto.getDate() );
 
         return facture;
     }

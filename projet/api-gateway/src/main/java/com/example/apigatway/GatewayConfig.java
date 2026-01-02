@@ -43,6 +43,12 @@ public class GatewayConfig {
                                 .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
                         )
                         .uri("http://localhost:8102"))
+                .route("facture-service", r -> r
+                        .path("/factures/**")
+                        .filters(f -> f
+                                .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
+                        )
+                        .uri("http://localhost:8083"))
                 .build();
     }
 
