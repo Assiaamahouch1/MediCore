@@ -20,15 +20,18 @@ public class FactureController {
 
     @PostMapping
     public FactureDTO create(@RequestBody FactureDTO dto) {
+        System.out.println(dto);
         return service.create(dto);
     }
 
+
     @GetMapping("/{id}")
     public FactureDTO getById(@PathVariable Long id) {
+        System.out.println(service.getById(id));
         return service.getById(id);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<FactureDTO> getAll() {
         return service.getAll();
     }

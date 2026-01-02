@@ -7,56 +7,121 @@ import com.yourorg.healthcare.patient.mapper.PatientMapper;
 import com.yourorg.healthcare.patient.model.Patient;
 import com.yourorg.healthcare.patient.repository.PatientRepository;
 import com.yourorg.healthcare.patient.service.PatientService;
+import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class PatientServiceImpl implements PatientService {
 
-    private final PatientRepository repository;
+    private final PatientRepository patientRepository;
+    @Override
+    public PatientResponse getPatientById(UUID id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Patient non trouvé avec l'id : " + id));
+        return mapToResponse(patient);
+    }
 
-    public PatientServiceImpl(PatientRepository repository) {
-        this.repository = repository;
+    // Créer un patient
+    @Override
+    public PatientResponse creerPatient(PatientRequest request) {
+        Patient patient = Patient.builder()
+                .cin(request.getCin())
+                .nom(request.getNom())
+                .prenom(request.getPrenom())
+                .dateNaissance(request.getDateNaissance())
+                .sexe(request.getSexe())
+                .numTel(request.getNumTel())
+                .email(request.getEmail())
+                .adresse(request.getAdresse())
+                .mutuelleNom(request.getMutuelleNom())
+                .mutuelleNumero(request.getMutuelleNumero())
+                .mutuelleExpireLe(request.getMutuelleExpireLe())
+                .build();
+
+        Patient saved = patientRepository.save(patient);
+        return mapToResponse(saved);
+    }
+
+    // Modifier un patient
+    @Override
+    public PatientResponse modifierPatient(UUID id, PatientRequest request) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Patient non trouvé avec l'id : " + id));
+
+        patient.setCin(request.getCin());
+        patient.setNom(request.getNom());
+        patient.setPrenom(request.getPrenom());
+        patient.setDateNaissance(request.getDateNaissance());
+        patient.setSexe(request.getSexe());
+        patient.setNumTel(request.getNumTel());
+        patient.setEmail(request.getEmail());
+        patient.setAdresse(request.getAdresse());
+        patient.setMutuelleNom(request.getMutuelleNom());
+        patient.setMutuelleNumero(request.getMutuelleNumero());
+        patient.setMutuelleExpireLe(request.getMutuelleExpireLe());
+
+        Patient updated = patientRepository.save(patient);
+        return mapToResponse(updated);
+    }
+    @Override
+    public void supprimerPatient(UUID id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Patient non trouvé avec l'id : " + id));
+
+        patient.setActif(false); // soft delete
+        patientRepository.save(patient);
+    }
+    @Override
+    public void RestaurerrPatient(UUID id) {
+        Patient patient = patientRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Patient non trouvé avec l'id : " + id));
+
+        patient.setActif(true); // soft delete
+        patientRepository.save(patient);
+    }
+
+
+
+    // Mapper Patient -> PatientResponse
+
+    public PatientResponse mapToResponse(Patient patient) {
+        PatientResponse response = new PatientResponse();
+        response.setId(patient.getId());
+        response.setCin(patient.getCin());
+        response.setNom(patient.getNom());
+        response.setPrenom(patient.getPrenom());
+        response.setDateNaissance(patient.getDateNaissance());
+        response.setSexe(patient.getSexe());
+        response.setNumTel(patient.getNumTel());
+        response.setEmail(patient.getEmail());
+        response.setAdresse(patient.getAdresse());
+        response.setMutuelleNom(patient.getMutuelleNom());
+        response.setMutuelleNumero(patient.getMutuelleNumero());
+        response.setMutuelleExpireLe(patient.getMutuelleExpireLe());
+        response.setActif(patient.isActif());
+        response.setCreatedAt(patient.getCreatedAt());
+        response.setUpdatedAt(patient.getUpdatedAt());
+        return response;
+    }
+    @Override
+    public List<Patient> getAll() {
+        return this.patientRepository.findByActifTrue();
     }
 
     @Override
-    public PatientResponse create(PatientRequest request) {
-        Patient entity = PatientMapper.toEntity(request, null);
-        entity = repository.save(entity);
-        return PatientMapper.toResponse(entity);
+    public List<Patient> getAllNoActif() {
+        return this.patientRepository.findByActifFalse();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public Page<PatientResponse> list(String q, Pageable pageable) {
-        Page<Patient> page = (q == null || q.isBlank())
-                ? repository.findActive(pageable)
-                : repository.searchActive(q.trim(), pageable);
-        return page.map(PatientMapper::toResponse);
-    }
 
-    @Override
-    @Transactional(readOnly = true)
-    public PatientResponse get(UUID id) {
-        Patient p = repository.findByIdAndActifTrue(id).orElseThrow(() -> new PatientNotFoundException(id));
-        return PatientMapper.toResponse(p);
-    }
-
-    @Override
-    public PatientResponse update(UUID id, PatientRequest request) {
-        Patient existing = repository.findByIdAndActifTrue(id).orElseThrow(() -> new PatientNotFoundException(id));
-        PatientMapper.toEntity(request, existing);
-        return PatientMapper.toResponse(existing);
-    }
-
-    @Override
-    public void delete(UUID id) {
-        Patient existing = repository.findByIdAndActifTrue(id).orElseThrow(() -> new PatientNotFoundException(id));
-        existing.setActif(false); // soft delete
-    }
 }

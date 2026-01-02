@@ -33,7 +33,6 @@ public class UserController {
         return userService.createAdmin(dto);
     }
 
-
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('SUPERADMIN')")
     public UserDTO getByIdAdmin(@PathVariable Long id) {
@@ -57,7 +56,6 @@ public class UserController {
     public void deleteAdmin(@PathVariable Long id) {
         userService.deleteAdmin(id);
     }
-
     @PreAuthorize("hasRole('SUPERADMIN')")
     @PutMapping("/image")
     public ResponseEntity<String> uploadImage(@RequestParam("id") Long id, @RequestParam("file") MultipartFile file) {

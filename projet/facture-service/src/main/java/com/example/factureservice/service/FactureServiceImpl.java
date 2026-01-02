@@ -7,6 +7,8 @@ import com.example.factureservice.model.Facture;
 import com.example.factureservice.repository.FactureRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,7 @@ public class FactureServiceImpl implements FactureService {
     @Override
     public FactureDTO create(FactureDTO dto) {
         Facture entity = mapper.toEntity(dto);
+        entity.setDate(LocalDateTime.now());
         Facture saved = repository.save(entity);
         return mapper.toDTO(saved);
     }

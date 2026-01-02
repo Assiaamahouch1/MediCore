@@ -34,7 +34,7 @@ import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 @Slf4j
 @Service
 @AllArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private UtilisateurRepository repository;

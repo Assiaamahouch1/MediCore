@@ -2,57 +2,88 @@ package com.yourorg.healthcare.patient.controller;
 
 import com.yourorg.healthcare.patient.dto.PatientRequest;
 import com.yourorg.healthcare.patient.dto.PatientResponse;
+import com.yourorg.healthcare.patient.model.Patient;
 import com.yourorg.healthcare.patient.service.PatientService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
-import org.springframework.data.domain.*;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
+
 @RequestMapping("/patients")
+@RequiredArgsConstructor
 public class PatientController {
 
-    private final PatientService service;
+    private final PatientService service; // ✅ INJECTION CORRECTE
 
-    public PatientController(PatientService service) {
-        this.service = service;
-    }
-
-    @GetMapping
-    public Page<PatientResponse> list(
-            @RequestParam(required = false) String q,
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size,
-            @RequestParam(defaultValue = "nom,asc") String sort) {
-
-        Sort s = Sort.by(sort.split(",")[0]);
-        if (sort.toLowerCase().endsWith(",desc")) s = s.descending();
-        Pageable pageable = PageRequest.of(page, size, s);
-        return service.list(q, pageable);
-    }
-
-    @GetMapping("/{id}")
-    public PatientResponse get(@PathVariable UUID id) {
-        return service.get(id);
-    }
-
+    // Créer un patient
     @PostMapping
-    public ResponseEntity<PatientResponse> create(@Valid @RequestBody PatientRequest request) {
-        PatientResponse created = service.create(request);
-        return ResponseEntity.created(URI.create("/patients/" + created.getId())).body(created);
+    public ResponseEntity<PatientResponse> creerPatient(
+            @Valid @RequestBody PatientRequest request) {
+
+        PatientResponse response = service.creerPatient(request);
+        return ResponseEntity
+                .created(URI.create("/patients/" + response.getId()))
+                .body(response);
     }
 
+    // Modifier un patient
     @PutMapping("/{id}")
-    public PatientResponse update(@PathVariable UUID id, @Valid @RequestBody PatientRequest request) {
-        return service.update(id, request);
+
+        public ResponseEntity<PatientResponse> modifierPatient(@PathVariable("id") UUID id,
+                @RequestBody PatientRequest request){
+
+        return ResponseEntity.ok(service.modifierPatient(id, request));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        service.delete(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deletePatient(@PathVariable("id") UUID id) {
+        try {
+            service.supprimerPatient(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            // Pour voir le détail de l'erreur
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @PutMapping("/restore/{id}")
+    public ResponseEntity<Void> restorePatient(@PathVariable("id") UUID id) {
+        try {
+            service.RestaurerrPatient(id);
+            return ResponseEntity.noContent().build();
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.notFound().build();
+        } catch (Exception e) {
+            // Pour voir le détail de l'erreur
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+    // Récupérer par ID
+    @GetMapping("/{id}")
+    public ResponseEntity<PatientResponse> getPatient(@PathVariable UUID id) {
+        return ResponseEntity.ok(service.getPatientById(id));
+    }
+
+    // Récupérer tous les patients
+    @GetMapping("/all")
+    public List<Patient> getAllPatient() {
+        return service.getAll();
+    }
+    @GetMapping("/allNoActif")
+    public List<Patient> getAllPatientNoActif() {
+        return service.getAllNoActif();
     }
 }

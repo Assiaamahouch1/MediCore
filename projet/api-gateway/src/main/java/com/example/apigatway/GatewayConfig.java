@@ -37,47 +37,19 @@ public class GatewayConfig {
                                 .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
                         )
                         .uri("http://localhost:8082"))
-                // CONSULTATION-SERVICE
-                .route("consultation-service", r -> r
-                        .path("/consultations/**")
-                        .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
-                        .uri("http://localhost:8103"))
-
-                // ORDONNANCE-SERVICE
-                .route("consultation-service", r -> r
-                        .path("/ordonnances/**")
-                        .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
-                        .uri("http://localhost:8103"))
-
-                // DOCUMENT-MEDICAL-SERVICE
-                .route("consultation-service", r -> r
-                        .path("/consultations/{consultationId}/documents/**")
-                        .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
-                        .uri("http://localhost:8103"))
-
-                // LIGNE-ORDONNANCE-SERVICE
-                .route("consultation-service", r -> r
-                        .path("/ordonnances/{ordonnanceId}/lignes/**")
-                        .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
-                        .uri("http://localhost:8103"))
-                .route("facture-service", r -> r
-                        .path("/factures")
-                        .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
-                        .uri("http://localhost:8083"))
-                .route("medicament-service", r -> r
-                        .path("/medicaments")
-                        .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
-                        .uri("http://localhost:8087"))
                 .route("patient-service", r -> r
-                        .path("/patients")
-                        .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
+                        .path("/patients/**")
+                        .filters(f -> f
+                                .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
+                        )
                         .uri("http://localhost:8102"))
-                .route("rendezVous-service", r -> r
-                        .path("/rendezVous")
-                        .filters(f -> f.filter(jwtFilter.apply(new JwtAuthenticationFilter.Config())))
-                        .uri("http://localhost:8084"))
+                .route("facture-service", r -> r
+                        .path("/factures/**")
+                        .filters(f -> f
+                                .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
+                        )
+                        .uri("http://localhost:8083"))
                 .build();
-
     }
 
     // Configuration CORS réactive (correcte pour Gateway)

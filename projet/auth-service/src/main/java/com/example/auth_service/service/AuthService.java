@@ -12,6 +12,7 @@ import com.example.auth_service.repository.UtilisateurRepository;
 import com.example.auth_service.config.JwtUtils;
 
 import com.example.auth_service.model.Utilisateur;
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -32,7 +33,7 @@ import java.util.UUID;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY_SUPERADMIN;
+import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Slf4j

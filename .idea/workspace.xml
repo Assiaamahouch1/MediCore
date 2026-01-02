@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8186075c-f453-4877-966a-4aff7dc90a6a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/api-gateway/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/api-gateway/target/classes/com/example/apigatway/ApiGatwayApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/api-gateway/target/classes/com/example/apigatway/GatewayConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/api-gateway/target/classes/com/example/apigatway/JwtAuthenticationFilter$Config.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/api-gateway/target/classes/com/example/apigatway/JwtAuthenticationFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/api-gateway/target/classes/com/example/apigatway/JwtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/AuthServiceApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/Constant/Constant.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/config/JwtAuthFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/config/JwtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/config/SecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/controller/AuthController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/controller/UserController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/dto/ForgotPasswordRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/dto/LoginRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/dto/RegisterRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/dto/ResetPasswordRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/dto/UserDTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/exception/ResourceNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/mapper/UserMapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/mapper/UserMapperImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/model/Role.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/model/Utilisateur$UtilisateurBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/model/Utilisateur.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/repository/UtilisateurRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/service/AuthService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/service/EmailService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/service/UserService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/classes/com/example/auth_service/service/UserServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/auth-service/target/generated-sources/annotations/com/example/auth_service/mapper/UserMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/ConsultationServiceApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/controller/ConsultationController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/controller/DocumentMedicalController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/controller/LigneOrdonnanceController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/controller/OrdonnanceController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/dto/ConsultationRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/dto/ConsultationResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/dto/DocumentMedicalRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/dto/DocumentMedicalResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/dto/LigneOrdonnanceRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/dto/LigneOrdonnanceResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/dto/OrdonnanceRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/dto/OrdonnanceResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/model/Consultation$ConsultationBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/model/Consultation.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/model/DocumentMedical$DocumentMedicalBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/model/DocumentMedical.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/model/LigneOrdonnance$LigneOrdonnanceBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/model/LigneOrdonnance.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/model/Ordonnance$OrdonnanceBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/model/Ordonnance.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/repository/ConsultationRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/repository/DocumentMedicalRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/repository/LigneOrdonnanceRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/repository/OrdonnanceRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/securite/JwtAuthFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/securite/JwtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/securite/SecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/service/ConsultationService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/service/DocumentMedicalService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/service/LigneOrdonnanceService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/consultation-service/target/classes/com/yourorg/healthcare/consultationservice/service/OrdonnanceService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/FactureServiceApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/config/SwaggerConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/controller/FactureController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/dto/FactureDTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/exception/ResourceNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/mapper/FactureMapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/mapper/FactureMapperImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/model/Facture.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/model/ModePaiement.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/repository/FactureRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/securite/JwtAuthFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/securite/JwtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/securite/SecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/service/FactureService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/classes/com/example/factureservice/service/FactureServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/facture-service/target/generated-sources/annotations/com/example/factureservice/mapper/FactureMapperImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/medicament-service/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/medicament-service/target/classes/com/yourorg/healthcare/medicamentservice/MedicamentServiceApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/medicament-service/target/classes/com/yourorg/healthcare/medicamentservice/controller/MedicamentController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/medicament-service/target/classes/com/yourorg/healthcare/medicamentservice/model/Medicament.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/medicament-service/target/classes/com/yourorg/healthcare/medicamentservice/repository/MedicamentRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/medicament-service/target/classes/com/yourorg/healthcare/medicamentservice/securite/JwtAuthFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/medicament-service/target/classes/com/yourorg/healthcare/medicamentservice/securite/JwtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/medicament-service/target/classes/com/yourorg/healthcare/medicamentservice/securite/SecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/PatientServiceApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/controller/PatientController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/dto/PatientRequest.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/dto/PatientResponse.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/exception/GlobalExceptionHandler.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/exception/PatientNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/mapper/PatientMapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/DocumentMedical$DocumentMedicalBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/DocumentMedical.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/DossierMedical$DossierMedicalBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/DossierMedical.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/Facture$FactureBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/Facture.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/ModePaiement.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/Patient$PatientBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/Patient.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/RendezVous$RendezVousBuilder.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/RendezVous.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/model/StatutRendezVous.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/repository/DocumentMedicalRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/repository/DossierMedicalRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/repository/FactureRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/repository/PatientRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/repository/RendezVousRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/securite/JwtAuthFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/securite/JwtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/securite/SecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/service/PatientService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/patient-service/target/classes/com/yourorg/healthcare/patient/service/impl/PatientServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/application.properties" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/RendezVousServiceApplication.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/config/SwaggerConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/controller/RendezVousController.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/dto/RendezVousDTO.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/exception/ResourceNotFoundException.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/mapper/RendezVousMapper.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/mapper/RendezVousMapperImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/model/RendezVous.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/model/StatutRdv.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/repository/RendezVousRepository.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/securite/JwtAuthFilter.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/securite/JwtUtils.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/securite/SecurityConfig.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/service/RendezVousService.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/classes/com/example/rendezvousservice/service/RendezVousServiceImpl.class" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projet/rendezVous-service/target/generated-sources/annotations/com/example/rendezvousservice/mapper/RendezVousMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/MediCore.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/MediCore.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/.idea/projet.iml" beforeDir="false" afterPath="$PROJECT_DIR$/projet/.idea/projet.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/api-gateway/src/main/java/com/example/apigatway/GatewayConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/api-gateway/src/main/java/com/example/apigatway/GatewayConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/api-gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/projet/api-gateway/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/controller/AuthController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/controller/AuthController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/dto/RegisterRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/dto/RegisterRequest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/service/AuthService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/service/AuthService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/auth-service/src/main/java/com/example/auth_service/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/cabinet-service/src/main/java/com/example/cabinetservice/model/Cabinet.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/cabinet-service/src/main/java/com/example/cabinetservice/model/Cabinet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/cabinet-service/src/main/java/com/example/cabinetservice/securite/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/cabinet-service/src/main/java/com/example/cabinetservice/securite/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/consultation-service/src/main/java/com/yourorg/healthcare/consultationservice/securite/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/consultation-service/src/main/java/com/yourorg/healthcare/consultationservice/securite/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/controller/FactureController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/controller/FactureController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/dto/FactureDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/dto/FactureDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/mapper/FactureMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/mapper/FactureMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/model/Facture.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/model/Facture.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/service/FactureServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/facture-service/src/main/java/com/example/factureservice/service/FactureServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/facture-service/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/projet/facture-service/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/medicament-service/src/main/java/com/yourorg/healthcare/medicamentservice/securite/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/medicament-service/src/main/java/com/yourorg/healthcare/medicamentservice/securite/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/controller/PatientController.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/controller/PatientController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/repository/PatientRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/repository/PatientRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/securite/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/securite/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/service/PatientService.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/service/PatientService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/service/impl/PatientServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/projet/patient-service/src/main/java/com/yourorg/healthcare/patient/service/impl/PatientServiceImpl.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 8
+}</component>
+  <component name="ProjectId" id="37S6XaO8YGYqx9CkvI9FPv0iAJn" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.ApiGatwayApplication.executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.AuthServiceApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Merging sawssan&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/sawssan/MediCore&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RunManager" selected="Spring Boot.AuthServiceApplication">
+    <configuration name="ApiGatwayApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.apigatway.ApiGatwayApplication" />
+      <module name="api-gateway" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.apigatway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="medicore" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="medicore" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="AuthServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="auth-service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.example.auth_service.AuthServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.auth_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.AuthServiceApplication" />
+        <item itemvalue="Application.ApiGatwayApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9823dce3aa75-28b599e66164-intellij.indexing.shared.core-IU-242.23339.11" />
+        <option value="bundled-js-predefined-d6986cc7102b-5c90d61e3bab-JavaScript-IU-242.23339.11" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8186075c-f453-4877-966a-4aff7dc90a6a" name="Changes" comment="" />
+      <created>1766884173037</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1766884173037</updated>
+      <workItem from="1766884175472" duration="1544000" />
+      <workItem from="1767125324536" duration="189000" />
+      <workItem from="1767125540890" duration="36000" />
+      <workItem from="1767394676505" duration="1813000" />
+      <workItem from="1767396530443" duration="69000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
