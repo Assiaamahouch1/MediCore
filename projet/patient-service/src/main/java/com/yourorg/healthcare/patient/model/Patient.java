@@ -8,8 +8,7 @@ import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -18,6 +17,7 @@ import java.util.UUID;
 public class Patient {
 
     @Id
+    @GeneratedValue
     @Column(nullable = false, updatable = false)
     private UUID id;
 

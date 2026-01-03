@@ -49,7 +49,7 @@ public class AuthController {
     }
 
     // 2. Utiliser le lien pour changer le mot de passe
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/reset-password/{token}")
     public ResponseEntity<String> resetPassword(
             @PathVariable String token,

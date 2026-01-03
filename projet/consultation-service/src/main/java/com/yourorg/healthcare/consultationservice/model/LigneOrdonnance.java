@@ -7,10 +7,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "lignes_ordonnance", indexes = {
-        @Index(name = "idx_ligne_ordonnance", columnList = "ordonnanceId"),
-        @Index(name = "idx_ligne_medicament", columnList = "medicamentId")
-})
+@Table(name = "lignes_ordonnance")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class LigneOrdonnance {
 

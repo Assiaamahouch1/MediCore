@@ -71,4 +71,37 @@ public class EmailService {
 
         mailSender.send(message);
     }
+
+
+    public void sendAccountCreationEmailMedc(String toEmail, String token, String fullName,String psw) {
+        String activationLink = "http://localhost:4200/signin/";
+
+        String subject = "Bienvenue - Activez Votre compte";
+
+        String content = """
+            Bonjour %s,
+
+            Votre compte Médecin a été créé avec succès sur l'application Gestion Cabinet Médical.
+
+            Pour activer votre compte, veuillez cliquer sur le lien ci-dessous  :
+
+            %s
+
+            et voila votre mot de passe (tu peut le modifier):
+            %s
+
+            Pour toute question, n'hésitez pas à contacter l'équipe technique.
+
+            Cordialement,
+            L'équipe Gestion Cabinet Médical
+            """.formatted(fullName,activationLink, psw);
+
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(toEmail);
+        message.setSubject(subject);
+        message.setText(content);
+        message.setFrom("no-reply@cabinetmedical.com");
+
+        mailSender.send(message);
+    }
 }

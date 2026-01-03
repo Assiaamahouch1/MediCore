@@ -8,13 +8,12 @@ import java.math.BigDecimal;
 import java.util.UUID;
 
 @Entity
-@Table(name = "factures", indexes = {
-        @Index(name = "idx_facture_patient", columnList = "patientId")
-})
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Table(name = "factures")
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class Facture {
 
     @Id
+    @GeneratedValue
     @Column(nullable = false, updatable = false)
     private UUID id;
 

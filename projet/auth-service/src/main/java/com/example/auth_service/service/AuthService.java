@@ -58,6 +58,7 @@ public class AuthService {
     public String register(RegisterRequest request) {
         if(utilisateurRepository.existsByUsername(request.getUsername())) // ← change ici
             throw new RuntimeException("Login already exists");
+        String token = UUID.randomUUID().toString();
 
         // Validation simple
         if ((request.getRole() == Role.MEDECIN || request.getRole() == Role.SECRETAIRE)
@@ -76,11 +77,11 @@ public class AuthService {
                 .cabinetId(request.getCabinetId())
                 .actif(true)
                 .build();
-
+        String fullName = user.getPrenom() + " " + user.getNom();
         utilisateurRepository.save(user);
+        emailService.sendAccountCreationEmailMedc(user.getUsername(), token, fullName,request.getPassword());
         return "User registered successfully";
     }
-
     public String login(LoginRequest request) {
         Utilisateur user = utilisateurRepository.findByUsername(request.getUsername()) // ← change ici
                 .orElseThrow(() -> new RuntimeException("User not found"));

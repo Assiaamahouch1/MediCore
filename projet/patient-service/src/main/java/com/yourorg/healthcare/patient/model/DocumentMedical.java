@@ -6,14 +6,12 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "documents_medicals", indexes = {
-        @Index(name = "idx_doc_patient", columnList = "patientId"),
-        @Index(name = "idx_doc_dossier", columnList = "dossierMedicalId")
-})
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Table(name = "documents_medicals")
+@Data @NoArgsConstructor @AllArgsConstructor @Builder
 public class DocumentMedical {
 
     @Id
+    @GeneratedValue
     @Column(nullable = false, updatable = false)
     private UUID id;
 
