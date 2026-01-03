@@ -61,7 +61,7 @@ public class UserController {
     public ResponseEntity<String> uploadImage(@RequestParam("id") Long id, @RequestParam("file") MultipartFile file) {
         return ResponseEntity.ok().body(userService.uploadImage(id, file));
     }
-    @PreAuthorize("hasRole('SUPERADMIN')")
+
     @GetMapping(path = "/image/{filename}", produces = { IMAGE_PNG_VALUE, IMAGE_JPEG_VALUE })
     public byte[] getImage(@PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(IMAGE_DIRECTORY + filename));

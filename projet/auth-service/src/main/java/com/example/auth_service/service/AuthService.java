@@ -34,6 +34,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY;
+import static com.example.auth_service.Constant.Constant.IMAGE_DIRECTORY_SUPERADMIN;
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 @Slf4j

@@ -11,6 +11,7 @@ import org.mapstruct.factory.Mappers;
  **/
 @Mapper(componentModel = "spring")
 public interface FactureMapper {
+
     @Mapping(target = "date", source = "date")
     FactureDTO toDTO(Facture facture);
     Facture toEntity(FactureDTO dto);
