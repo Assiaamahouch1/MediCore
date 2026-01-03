@@ -43,3 +43,8 @@ __screenshots__/
 Thumbs.db
 .idea/
 MediCore/.idea/
+
+
+target/
+.class
+generated-sources
