@@ -49,6 +49,12 @@ public class GatewayConfig {
                                 .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
                         )
                         .uri("http://localhost:8083"))
+                .route("rendezVous-service", r -> r
+                        .path("/rendezVous/**")
+                        .filters(f -> f
+                                .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
+                        )
+                        .uri("http://localhost:8084"))
                 .build();
     }
 

@@ -6,5 +6,6 @@ package com.example.rendezvousservice.model;
 public enum StatutRdv {
     CONFIRME,
     ANNULE,
-    EN_ATTENTE
+    EN_ATTENTE,
+    HISTORIQUE
 }
