@@ -1,18 +1,16 @@
 package com.example.rendezvousservice.service;
 
-import java.util.ArrayList;
+import java.util.*;
+
 import com.example.rendezvousservice.model.RendezVous;
 import com.example.rendezvousservice.model.StatutRdv;
 import com.example.rendezvousservice.repository.RendezVousRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class RendezVousServiceImpl implements RendezVousService {
@@ -63,11 +61,11 @@ public class RendezVousServiceImpl implements RendezVousService {
 
     @Override
     @Transactional  // Indispensable pour que les modifications soient persistées
-    public List<RendezVous> getAll() {
+    public List<RendezVous> getAll(Long cabinetId) {
         ZoneId zone = ZoneId.systemDefault();
         LocalDate today = LocalDate.now(zone);
 
-        List<RendezVous> rdvs = repository.findAll();
+        List<RendezVous> rdvs = repository.findByCabinetId(cabinetId);
 
         List<RendezVous> toDelete = new ArrayList<>();
         List<RendezVous> toUpdate = new ArrayList<>();
@@ -111,10 +109,11 @@ public class RendezVousServiceImpl implements RendezVousService {
     @Override
     public Optional<RendezVous> modifierRendezVousPartiel(
             Long id,
-            Date nouvelleDate,        // ← Date au lieu de LocalDate
+            Date nouvelleDate,
             String nouvelleHeure,
             String nouveauMotif,
-            String nouvellesNotes) {
+            String nouvellesNotes,
+            Long cabinetId) {
 
         Optional<RendezVous> optionalRdv = repository.findById(id);
 
@@ -124,9 +123,8 @@ public class RendezVousServiceImpl implements RendezVousService {
 
         RendezVous rdv = optionalRdv.get();
 
-        // Mise à jour uniquement si la valeur est fournie
         if (nouvelleDate != null) {
-            rdv.setDateRdv(nouvelleDate); // Direct, pas de conversion nécessaire
+            rdv.setDateRdv(nouvelleDate);
         }
 
         if (nouvelleHeure != null && !nouvelleHeure.trim().isEmpty()) {
@@ -137,12 +135,72 @@ public class RendezVousServiceImpl implements RendezVousService {
             rdv.setMotif(nouveauMotif.trim());
         }
 
-        // Notes : accepte chaîne vide comme valeur valide
         if (nouvellesNotes != null) {
-            rdv.setNotes(nouvellesNotes.trim().isEmpty() ? "" : nouvellesNotes.trim());
+            rdv.setNotes(nouvellesNotes.trim());
         }
 
-        RendezVous updated = repository.save(rdv);
-        return Optional.of(updated);
+        // ✅ NE MODIFIER cabinetId QUE S’IL EST FOURNI
+        if (cabinetId != null) {
+            rdv.setCabinetId(cabinetId);
+        }
+
+        return Optional.of(repository.save(rdv));
     }
+
+    @Override
+    public List<RendezVous> findByStatutEnAttente(Long cabinetId) {
+        return repository.findByCabinetIdAndStatut(cabinetId,StatutRdv.EN_ATTENTE);
+    }
+
+    @Override
+    public List<RendezVous> findByStatutConfirmeAujourdhui(Long cabinetId) {
+
+        Calendar cal = Calendar.getInstance();
+
+        // 🔹 Début de la journée
+        cal.set(Calendar.HOUR_OF_DAY, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.set(Calendar.MILLISECOND, 0);
+        Date debutJour = cal.getTime();
+
+        // 🔹 Fin de la journée
+        cal.set(Calendar.HOUR_OF_DAY, 23);
+        cal.set(Calendar.MINUTE, 59);
+        cal.set(Calendar.SECOND, 59);
+        cal.set(Calendar.MILLISECOND, 999);
+        Date finJour = cal.getTime();
+
+        return repository.findRdvAujourdhui(
+                cabinetId,
+                StatutRdv.CONFIRME,
+                debutJour,
+                finJour
+        );
+    }
+
+
+
+    @Override
+    public List<RendezVous> getRendezVousArrives(Long cabinetId) {
+        List<RendezVous> rdv = repository.findByCabinetIdAndStatut(cabinetId,StatutRdv.ARRIVE);
+       return rdv;
+    }
+
+    @Override
+    public RendezVous marquerCommeArrive(Long idRdv) {
+        RendezVous rdv = repository.findById(idRdv)
+                .orElseThrow(() -> new EntityNotFoundException("rdv non trouvé avec l'id : " + idRdv));
+
+
+
+        rdv.setStatut(StatutRdv.ARRIVE);
+
+
+        RendezVous updated = repository.save(rdv);
+        return updated;
+    }
+
+
+
 }

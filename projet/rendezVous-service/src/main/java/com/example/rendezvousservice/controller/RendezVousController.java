@@ -1,6 +1,5 @@
 package com.example.rendezvousservice.controller;
 
-import com.example.rendezvousservice.dto.RendezVousDTO;
 import com.example.rendezvousservice.dto.RendezVousUpdateRequest;
 import com.example.rendezvousservice.model.RendezVous;
 import com.example.rendezvousservice.service.RendezVousService;
@@ -23,21 +22,42 @@ public class RendezVousController {
         this.service = service;
     }
 
-    @PostMapping
-    public RendezVous creerRendezVous(@RequestBody RendezVous rdv) {
-        return service.creerRendezVous(rdv);
+    @PutMapping("/confirmer/{id}")
+    public ResponseEntity<Void> confirmer(@PathVariable Long id) {
+        boolean success = service.confirmerRendezVous(id);
+
+        if (success) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
+
+    // Endpoint pour les RDV en attente (déjà utilisé pour le select dans le frontend)
+    @GetMapping("/en_attente/{cabinetId}")
+    public ResponseEntity<List<RendezVous>> getEnAttente(@PathVariable("cabinetId") Long cabinetId) {
+        return ResponseEntity.ok(service.findByStatutEnAttente(cabinetId));
+    }
+
+    @GetMapping("/liste/{cabinetId}")
+    public ResponseEntity<List<RendezVous>> getConfirme( @PathVariable("cabinetId") Long cabinetId) {
+        return ResponseEntity.ok(service.findByStatutConfirmeAujourdhui(cabinetId));
+    }
+
 
     @PutMapping("/annuler/{id}")
     public String annulerRdv(@PathVariable Long id) {
         boolean result = service.annulerRendezVous(id);
         return result ? "Rendez-vous annulé" : "Rendez-vous introuvable";
     }
-    @GetMapping("/all")
-    public List<RendezVous> getAllRendezVous() {
-        return service.getAll();
+    // Récupérer tous les patients
+    @GetMapping("/all/{cabinetId}")
+    public List<RendezVous> getAllRendezVous(
+            @PathVariable("cabinetId") Long cabinetId
+    ) {
+        return service.getAll(cabinetId);
     }
-    @PatchMapping("/{id}/modifier-partiel")
+     @PatchMapping("/{id}/modifier-partiel")
     public ResponseEntity<RendezVous> modifierRendezVousPartiel(
             @PathVariable Long id,
             @RequestBody RendezVousUpdateRequest request) {
@@ -47,7 +67,8 @@ public class RendezVousController {
                 request.getDateRdv(),
                 request.getHeureRdv(),
                 request.getMotif(),
-                request.getNotes()
+                request.getNotes(),
+                request.getCabinetId()
         );
 
         if (updated.isPresent()) {
@@ -56,5 +77,30 @@ public class RendezVousController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @PostMapping
+    public RendezVous creerRendezVous(@RequestBody RendezVous dto) {
+        return service.creerRendezVous(dto);
+    }
+
+
+
+    @PutMapping("/Arrive/{idRdv}")
+    public RendezVous RdvArrive(@PathVariable Long idRdv) {
+        RendezVous result = service.marquerCommeArrive(idRdv);
+        return result;
+    }
+
+
+
+    // Récupérer tous les patients
+    @GetMapping("/allArrive/{cabinetId}")
+    public List<RendezVous> getAllRendezVousArrive(
+            @PathVariable("cabinetId") Long cabinetId
+    ) {
+        return service.getRendezVousArrives(cabinetId);
+    }
+
 }
 

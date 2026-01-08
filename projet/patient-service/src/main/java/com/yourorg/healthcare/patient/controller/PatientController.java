@@ -78,12 +78,15 @@ public class PatientController {
     }
 
     // Récupérer tous les patients
-    @GetMapping("/all")
-    public List<Patient> getAllPatient() {
-        return service.getAll();
+    @GetMapping("/all/{cabinetId}")
+    public List<Patient> getAllPatient(
+            @PathVariable("cabinetId") Long cabinetId
+    ) {
+        return service.getAll(cabinetId);
     }
-    @GetMapping("/allNoActif")
-    public List<Patient> getAllPatientNoActif() {
-        return service.getAllNoActif();
+
+    @GetMapping("/allNoActif/{cabinetId}")
+    public List<Patient> getAllPatientNoActif(@PathVariable("cabinetId") Long cabinetId) {
+        return service.getAllNoActif(cabinetId);
     }
 }

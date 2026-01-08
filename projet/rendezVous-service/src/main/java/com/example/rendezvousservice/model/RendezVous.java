@@ -20,7 +20,9 @@ public class RendezVous {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idRdv;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date dateRdv;
+
     private String heureRdv;
     private String motif;
 
@@ -30,6 +32,8 @@ public class RendezVous {
     private String notes;
     private UUID patientId;
     private Long userId;
+    @Column(name = "cabinet_id", nullable = false)
+    private Long cabinetId;
 
 
 

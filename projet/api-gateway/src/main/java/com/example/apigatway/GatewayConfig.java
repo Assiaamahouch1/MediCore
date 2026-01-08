@@ -55,6 +55,12 @@ public class GatewayConfig {
                                 .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
                         )
                         .uri("http://localhost:8084"))
+                .route("consultation-service", r -> r
+                        .path("/consultations/**")
+                        .filters(f -> f
+                                .filter(jwtFilter.apply(new JwtAuthenticationFilter.Config()))
+                        )
+                        .uri("http://localhost:8103"))
                 .build();
     }
 

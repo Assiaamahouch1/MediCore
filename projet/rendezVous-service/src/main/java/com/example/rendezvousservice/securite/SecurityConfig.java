@@ -3,6 +3,7 @@ package com.example.rendezvousservice.securite;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -28,12 +29,18 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/rendezVous/**").authenticated()  // tout protégé
+                        // Endpoints publics pour inter-service et frontend
+                        .requestMatchers(HttpMethod.PUT, "/rendezVous/confirmer/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/rendezVous/en_attente").permitAll()
+
+                        // Tout le reste de /rendezVous nécessite authentification
+                        .requestMatchers("/rendezVous/**").authenticated()
+
+                        // Autres endpoints
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
-
 }

@@ -7,5 +7,6 @@ public enum StatutRdv {
     CONFIRME,
     ANNULE,
     EN_ATTENTE,
-    HISTORIQUE
+    HISTORIQUE,
+    ARRIVE
 }

@@ -13,6 +13,7 @@ public interface PatientRepository extends JpaRepository<Patient, UUID> {
 
     List<Patient> findByActifTrue();
     List<Patient> findByActifFalse();
-
+    List<Patient> findByCabinetIdAndActifTrue(Long cabinetId);
+    List<Patient> findByCabinetIdAndActifFalse(Long cabinetId);
     Patient findByEmail(String username);
 }

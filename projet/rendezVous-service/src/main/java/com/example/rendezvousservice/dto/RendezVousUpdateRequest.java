@@ -20,6 +20,7 @@ public class RendezVousUpdateRequest {
     private String motif;
 
     private String notes;
+    private Long cabinetId;
 
 
 

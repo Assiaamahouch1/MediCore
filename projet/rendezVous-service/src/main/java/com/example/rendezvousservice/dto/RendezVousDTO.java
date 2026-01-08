@@ -22,5 +22,6 @@ public class RendezVousDTO {
     private String notes;
     private Long patientId;
     private Long userId;
+    private Long cabinetId;
 
 }

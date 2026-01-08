@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.UUID;
 
 @Entity
@@ -22,7 +23,7 @@ public class Consultation {
     private String type;
 
     @Column(nullable = false)
-    private Instant dateConsultation;
+    private Date dateConsultation;
 
     @Column(length = 2000)
     private String examenClinique;
@@ -39,14 +40,9 @@ public class Consultation {
     @Column(length = 2000)
     private String observations;
 
+
     @Column(nullable = false)
     private UUID patientId;
-
-    @Column(nullable = false)
-    private UUID medecinId;
-
-    private UUID rendezVousId;
-    private UUID dossierMedicalId;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
@@ -54,14 +50,5 @@ public class Consultation {
     @Column(nullable = false)
     private Instant updatedAt;
 
-    @PrePersist
-    void prePersist() {
-        if (id == null) id = UUID.randomUUID();
-        Instant now = Instant.now();
-        if (dateConsultation == null) dateConsultation = now;
-        createdAt = now; updatedAt = now;
-    }
 
-    @PreUpdate
-    void preUpdate() { updatedAt = Instant.now(); }
 }

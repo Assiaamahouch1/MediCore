@@ -71,6 +71,9 @@ public class Patient {
         actif = true;
     }
 
+    @Column(name = "cabinet_id", nullable = false)
+    private Long cabinetId;
+
     @PreUpdate
     void preUpdate() { updatedAt = Instant.now(); }
 

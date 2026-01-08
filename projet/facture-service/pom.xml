@@ -18,9 +18,10 @@
 
     <properties>
         <java.version>17</java.version>
-        <spring-cloud.version>2025.1.0</spring-cloud.version> <!-- Ajouter cette ligne -->
+        <spring-cloud.version>2023.0.2</spring-cloud.version>
         <mapstruct.version>1.5.5.Final</mapstruct.version>
     </properties>
+
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -31,13 +32,7 @@
                 <scope>import</scope>
             </dependency>
 
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.2.5</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -96,6 +91,10 @@
             <artifactId>spring-boot-starter-mail</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
 
 
 
@@ -140,12 +139,11 @@
             <version>${mapstruct.version}</version>
             <scope>provided</scope>
         </dependency>
-        <!-- Springfox Swagger 3 -->
         <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-            <version>3.0.0</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
+
 
 
         <!-- 📘 Swagger / OpenAPI (compatible Spring Boot 3) -->

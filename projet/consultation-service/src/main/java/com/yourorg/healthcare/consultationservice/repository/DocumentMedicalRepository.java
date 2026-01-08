@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.UUID;
 
 public interface DocumentMedicalRepository extends JpaRepository<DocumentMedical, UUID> {
-    List<DocumentMedical> findByConsultationId(UUID consultationId);
+    DocumentMedical findByPatientId(UUID patientId);
 }

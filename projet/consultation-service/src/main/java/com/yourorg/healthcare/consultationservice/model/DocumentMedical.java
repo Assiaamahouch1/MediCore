@@ -7,9 +7,7 @@ import java.time.Instant;
 import java.util.UUID;
 
 @Entity
-@Table(name = "documents_consultation", indexes = {
-        @Index(name = "idx_doc_consultation", columnList = "consultationId")
-})
+@Table(name = "documents_consultation")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
 public class DocumentMedical {
 
@@ -18,20 +16,22 @@ public class DocumentMedical {
     private UUID id;
 
     @Column(nullable = false, length = 255)
-    private String titre;
-
+    private String antMedicaux;
     @Column(nullable = false, length = 255)
-    private String url;
+    private String antChirug;
+    @Column(nullable = false, length = 255)
+    private String allergies;
+    @Column(nullable = false, length = 255)
+    private String traitement;
+    @Column(nullable = false, length = 255)
+    private String habitudes;
+
 
     @Column(nullable = false)
-    private UUID consultationId;
+    private UUID patientId;
 
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
-    @PrePersist
-    void prePersist() {
-        if (id == null) id = UUID.randomUUID();
-        createdAt = Instant.now();
-    }
+
 }

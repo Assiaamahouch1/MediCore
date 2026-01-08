@@ -34,6 +34,7 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
                     path.startsWith("/api/auth/forgot-password") ||
                     path.startsWith("/api/auth/reset-password") ||
                     path.startsWith("/api/auth/superadmin/image/") ||
+                    path.startsWith("/rendezVous/confirmer/**") ||
                     path.startsWith("/api/auth/image/") ||
                     path.startsWith("/actuator") ||
                     path.contains("swagger") ||

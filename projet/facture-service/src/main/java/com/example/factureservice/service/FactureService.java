@@ -1,6 +1,7 @@
 package com.example.factureservice.service;
 
 import com.example.factureservice.dto.FactureDTO;
+import com.example.factureservice.model.Facture;
 
 import java.util.List;
 

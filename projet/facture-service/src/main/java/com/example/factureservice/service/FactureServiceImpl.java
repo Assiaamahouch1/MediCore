@@ -5,6 +5,7 @@ import com.example.factureservice.exception.ResourceNotFoundException;
 import com.example.factureservice.mapper.FactureMapper;
 import com.example.factureservice.model.Facture;
 import com.example.factureservice.repository.FactureRepository;
+import feign.FeignException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -30,10 +31,12 @@ public class FactureServiceImpl implements FactureService {
     public FactureDTO create(FactureDTO dto) {
         Facture entity = mapper.toEntity(dto);
         entity.setDate(LocalDateTime.now());
+        entity.setRendezVousId(dto.getRendezVousId());
+
         Facture saved = repository.save(entity);
+
         return mapper.toDTO(saved);
     }
-
 
     @Override
     public FactureDTO getById(Long id) {

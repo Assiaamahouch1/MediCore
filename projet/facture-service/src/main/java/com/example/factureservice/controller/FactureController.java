@@ -1,6 +1,7 @@
 package com.example.factureservice.controller;
 
 import com.example.factureservice.dto.FactureDTO;
+import com.example.factureservice.model.Facture;
 import com.example.factureservice.service.FactureService;
 import org.springframework.web.bind.annotation.*;
 

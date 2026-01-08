@@ -27,10 +27,5 @@ public class Ordonnance {
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
-    @PrePersist
-    void prePersist() {
-        if (id == null) id = UUID.randomUUID();
-        if (date == null) date = Instant.now();
-        createdAt = Instant.now();
-    }
+
 }

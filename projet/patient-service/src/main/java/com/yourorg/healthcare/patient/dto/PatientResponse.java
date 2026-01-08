@@ -24,4 +24,5 @@ public class PatientResponse {
     private boolean actif;
     private Instant createdAt;
     private Instant updatedAt;
+    private Long cabinetId;
 }

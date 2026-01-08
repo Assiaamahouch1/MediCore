@@ -32,4 +32,5 @@ public class PatientRequest {
     @Size(max = 60) private String mutuelleNumero;
 
     private LocalDate mutuelleExpireLe;
+    private Long cabinetId;
 }

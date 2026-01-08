@@ -1,9 +1,7 @@
 package com.example.rendezvousservice.service;
 
-import com.example.rendezvousservice.dto.RendezVousDTO;
 import com.example.rendezvousservice.model.RendezVous;
 
-import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +14,19 @@ public interface RendezVousService {
     public List<RendezVous> getUpcomingRendezVous();
     public boolean annulerRendezVous(Long id);
     public boolean confirmerRendezVous(Long id);
-    public List<RendezVous> getAll();
+    public List<RendezVous> getAll(Long cabinetId);
     public Optional<RendezVous> modifierRendezVousPartiel(
             Long id,
            Date nouvelleDate,
             String nouvelleHeure,
             String nouveauMotif,
-            String nouvellesNotes);
+            String nouvellesNotes,
+            Long cabinetId);
+
+    public List<RendezVous> findByStatutConfirmeAujourdhui(Long cabinetId);
+    public List<RendezVous> findByStatutEnAttente(Long cabinetId);
+    public RendezVous marquerCommeArrive(Long idRdv);
+    public List<RendezVous> getRendezVousArrives(Long cabinetId);
+
+
 }

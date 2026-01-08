@@ -33,9 +33,5 @@ public class LigneOrdonnance {
     @Column(nullable = false, updatable = false)
     private Instant createdAt;
 
-    @PrePersist
-    void prePersist() {
-        if (id == null) id = UUID.randomUUID();
-        createdAt = Instant.now();
-    }
+
 }

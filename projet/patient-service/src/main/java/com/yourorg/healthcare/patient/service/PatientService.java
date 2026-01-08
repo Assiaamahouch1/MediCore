@@ -15,7 +15,8 @@ public interface PatientService {
     public void supprimerPatient(UUID id);
     public void RestaurerrPatient(UUID id);
     public PatientResponse getPatientById(UUID id);
-    public List<Patient> getAll();
-    public List<Patient> getAllNoActif();
+    public List<Patient> getAll(Long cabinetId);
+    public List<Patient> getAllNoActif(Long cabinetId);
+
 
 }

@@ -48,6 +48,7 @@ public class PatientServiceImpl implements PatientService {
                 .mutuelleNom(request.getMutuelleNom())
                 .mutuelleNumero(request.getMutuelleNumero())
                 .mutuelleExpireLe(request.getMutuelleExpireLe())
+                .cabinetId(request.getCabinetId())
                 .build();
 
         Patient saved = patientRepository.save(patient);
@@ -71,6 +72,7 @@ public class PatientServiceImpl implements PatientService {
         patient.setMutuelleNom(request.getMutuelleNom());
         patient.setMutuelleNumero(request.getMutuelleNumero());
         patient.setMutuelleExpireLe(request.getMutuelleExpireLe());
+        patient.setCabinetId(request.getCabinetId());
 
         Patient updated = patientRepository.save(patient);
         return mapToResponse(updated);
@@ -118,14 +120,16 @@ public class PatientServiceImpl implements PatientService {
         return response;
     }
     @Override
-    public List<Patient> getAll() {
-        return this.patientRepository.findByActifTrue();
+    public List<Patient> getAll(Long cabinetId) {
+        return patientRepository.findByCabinetIdAndActifTrue(cabinetId);
     }
 
     @Override
-    public List<Patient> getAllNoActif() {
-        return this.patientRepository.findByActifFalse();
+    public List<Patient> getAllNoActif(Long cabinetId) {
+        return this.patientRepository.findByCabinetIdAndActifFalse(cabinetId);
     }
+
+
 
 
 }
