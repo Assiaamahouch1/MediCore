@@ -102,5 +102,10 @@ public class RendezVousController {
         return service.getRendezVousArrives(cabinetId);
     }
 
+    @PutMapping("/Termine/{idRdv}")
+    public RendezVous termineRdv(@PathVariable Long idRdv) {
+        return service.terminerRendezVous(idRdv);
+    }
+
 }
 

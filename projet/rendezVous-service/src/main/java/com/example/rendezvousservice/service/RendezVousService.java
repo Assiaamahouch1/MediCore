@@ -27,6 +27,6 @@ public interface RendezVousService {
     public List<RendezVous> findByStatutEnAttente(Long cabinetId);
     public RendezVous marquerCommeArrive(Long idRdv);
     public List<RendezVous> getRendezVousArrives(Long cabinetId);
-
+    RendezVous terminerRendezVous(Long idRdv);
 
 }

@@ -16,13 +16,16 @@ public class LigneOrdonnance {
     private UUID id;
 
     @Column(length = 500)
-    private String description;
+    private String nom;
 
     @Column(length = 255)
     private String dosage;
 
     @Column(length = 255)
     private String duree;
+
+    @Column(length = 255)
+    private String forme;
 
     @Column(nullable = false)
     private UUID ordonnanceId;

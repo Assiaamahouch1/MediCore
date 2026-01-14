@@ -12,6 +12,7 @@ public class LigneOrdonnanceService {
     private final LigneOrdonnanceRepository repo;
 
     public LigneOrdonnanceService(LigneOrdonnanceRepository repo) { this.repo = repo; }
+
     public List<LigneOrdonnance> getLignesByOrdonnance(UUID ordonnanceId) {
         return repo.findByOrdonnanceId(ordonnanceId);
     }

@@ -201,6 +201,12 @@ public class RendezVousServiceImpl implements RendezVousService {
         return updated;
     }
 
-
+    @Transactional
+    public RendezVous terminerRendezVous(Long idRdv) {
+        RendezVous rdv = repository.findById(idRdv)
+                .orElseThrow(() -> new RuntimeException("Rendez-vous non trouvé avec l'id: " + idRdv));
+        rdv.setStatut(StatutRdv.TERMINE);
+        return repository.save(rdv);
+    }
 
 }

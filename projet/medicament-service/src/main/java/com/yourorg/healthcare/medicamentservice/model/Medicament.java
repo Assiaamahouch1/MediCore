@@ -16,19 +16,19 @@ public class Medicament {
     private UUID id;
 
     @NotBlank
-    @Column(nullable = false, length = 255, unique = true)
+    @Column(nullable = false, length = 500)
     private String nom;
 
-    @Column(length = 255)
+    @Column(length = 500)
     private String description;
 
-    @Column(length = 50)
+    @Column(length = 500)
     private String atcCode;
 
-    @Column(length = 100)
+    @Column(length = 500)
     private String forme;
 
-    @Column(length = 20)
+    @Column(length = 500)
     private String dosageUnite;
 
     @Column(nullable = false, updatable = false)
@@ -37,16 +37,5 @@ public class Medicament {
     @Column(nullable = false)
     private Instant updatedAt;
 
-    @PrePersist
-    void prePersist() {
-        if (id == null) id = UUID.randomUUID();
-        Instant now = Instant.now();
-        createdAt = now;
-        updatedAt = now;
-    }
 
-    @PreUpdate
-    void preUpdate() {
-        updatedAt = Instant.now();
-    }
 }
