@@ -1,4 +1,5 @@
 package com.example.cabinetservice.service;
+
 import com.example.cabinetservice.dto.*;
 import com.example.cabinetservice.mapper.CabinetMapper;
 import com.example.cabinetservice.model.Cabinet;
@@ -21,8 +22,10 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class CabinetService {
@@ -215,5 +218,66 @@ public class CabinetService {
         } catch (MalformedURLException e) {
             throw new RuntimeException("Error reading logo: " + e.getMessage(), e);
         }
+    }
+
+    // ============ DASHBOARD ADMIN STATS ============
+
+    /**
+     * Récupère les statistiques globales pour le dashboard SuperAdmin
+     */
+    public AdminDashboardStatsDTO getDashboardStats() {
+        List<Cabinet> allCabinets = repo.findAll();
+        LocalDate today = LocalDate.now();
+        LocalDate sevenDaysLater = today.plusDays(7);
+
+        // Total cabinets
+        long totalCabinets = allCabinets.size();
+
+        // Cabinets actifs
+        long cabinetsActifs = allCabinets.stream()
+                .filter(c -> Boolean.TRUE.equals(c.getService_actif()))
+                .count();
+
+        // Cabinets inactifs
+        long cabinetsInactifs = totalCabinets - cabinetsActifs;
+
+        // Cabinets expirés (date d'expiration passée)
+        long cabinetsExpires = allCabinets.stream()
+                .filter(c -> c.getDate_expiration_service() != null)
+                .filter(c -> c.getDate_expiration_service().isBefore(today) || c.getDate_expiration_service().isEqual(today))
+                .count();
+
+        // Cabinets expirant dans les 7 prochains jours
+        long cabinetsExpirantBientot = allCabinets.stream()
+                .filter(c -> Boolean.TRUE.equals(c.getService_actif()))
+                .filter(c -> c.getDate_expiration_service() != null)
+                .filter(c -> c.getDate_expiration_service().isAfter(today))
+                .filter(c -> !c.getDate_expiration_service().isAfter(sevenDaysLater))
+                .count();
+
+        // Répartition par spécialité
+        Map<String, Long> repartitionParSpecialite = allCabinets.stream()
+                .collect(Collectors.groupingBy(
+                        c -> c.getSpecialite() != null && !c.getSpecialite().isBlank()
+                                ? c.getSpecialite()
+                                : "Non spécifié",
+                        Collectors.counting()
+                ));
+
+        return new AdminDashboardStatsDTO(
+                totalCabinets,
+                cabinetsActifs,
+                cabinetsInactifs,
+                cabinetsExpirantBientot,
+                repartitionParSpecialite,
+                cabinetsExpires
+        );
+    }
+
+    /**
+     * Récupère les statistiques pour un cabinet spécifique (pour Admin)
+     */
+    public CabinetResponse getCabinetStats(Long cabinetId) {
+        return get(cabinetId);
     }
 }
