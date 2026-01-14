@@ -22,6 +22,7 @@ public class Cabinet {
     private String nom;
     private String specialite;
     private String adresse;
+    private String ville;
     private String tel;
     private Boolean service_actif;
     private LocalDate date_expiration_service;

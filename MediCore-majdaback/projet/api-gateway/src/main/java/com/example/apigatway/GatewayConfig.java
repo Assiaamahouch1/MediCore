@@ -22,6 +22,12 @@ public class GatewayConfig {
     @Bean
     public RouteLocator routes(RouteLocatorBuilder builder) {
         return builder.routes()
+                // CHATBOT API (PUBLIC - Sans authentification JWT)
+                .route("chatbot-public", r -> r
+                        .path("/api/chatbot/**")
+                        // Pas de filtre JWT - route publique
+                        .uri("http://localhost:8082"))
+
                 // AUTH-SERVICE → On laisse /api/auth/** sans stripPrefix
                 .route("auth_service", r -> r
                         .path("/api/auth/**")
@@ -72,12 +78,21 @@ public class GatewayConfig {
         config.setAllowedOrigins(Arrays.asList(
                 "http://localhost:4200"
         ));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        config.setAllowedHeaders(Arrays.asList("*"));
-        config.setExposedHeaders(Arrays.asList("Authorization", "Content-Type")); // utile pour JWT
+        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"));
+        config.setAllowedHeaders(Arrays.asList(
+                "Origin",
+                "Content-Type",
+                "Accept",
+                "Authorization",
+                "X-Requested-With",
+                "Access-Control-Request-Method",
+                "Access-Control-Request-Headers"
+        ));
+        config.setExposedHeaders(Arrays.asList("Authorization", "Content-Type"));
+        config.setMaxAge(3600L); // Cache preflight pour 1 heure
 
-        CorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        ((UrlBasedCorsConfigurationSource) source).registerCorsConfiguration("/**", config);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
 
         return new CorsWebFilter(source);
     }

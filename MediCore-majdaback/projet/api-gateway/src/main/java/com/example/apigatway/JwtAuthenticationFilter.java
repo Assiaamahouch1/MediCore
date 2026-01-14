@@ -27,13 +27,20 @@ public class JwtAuthenticationFilter extends AbstractGatewayFilterFactory<JwtAut
         return (exchange, chain) -> {
             ServerHttpRequest request = exchange.getRequest();
             String path = request.getURI().getPath();
+            String method = request.getMethod().name();
 
-            // Chemins publics : login, register, actuator, swagger, etc.
+            // Laisser passer les requêtes OPTIONS (preflight CORS)
+            if ("OPTIONS".equalsIgnoreCase(method)) {
+                return chain.filter(exchange);
+            }
+
+            // Chemins publics : login, register, chatbot, actuator, swagger, etc.
             if (path.startsWith("/api/auth/login") ||
                     path.startsWith("/api/auth/register") ||
                     path.startsWith("/api/auth/forgot-password") ||
                     path.startsWith("/api/auth/reset-password") ||
                     path.startsWith("/api/auth/superadmin/image/") ||
+                    path.startsWith("/api/chatbot/") ||
                     path.startsWith("/rendezVous/confirmer/**") ||
                     path.startsWith("/api/auth/image/") ||
                     path.startsWith("/actuator") ||
