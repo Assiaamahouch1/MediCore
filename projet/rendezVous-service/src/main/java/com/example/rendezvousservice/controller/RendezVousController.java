@@ -1,5 +1,7 @@
 package com.example.rendezvousservice.controller;
 
+import com.example.rendezvousservice.dto.ConsultationStatsDTO;
+import com.example.rendezvousservice.dto.DashboardStatsDTO;
 import com.example.rendezvousservice.dto.RendezVousUpdateRequest;
 import com.example.rendezvousservice.model.RendezVous;
 import com.example.rendezvousservice.service.RendezVousService;
@@ -7,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -57,7 +60,7 @@ public class RendezVousController {
     ) {
         return service.getAll(cabinetId);
     }
-     @PatchMapping("/{id}/modifier-partiel")
+    @PatchMapping("/{id}/modifier-partiel")
     public ResponseEntity<RendezVous> modifierRendezVousPartiel(
             @PathVariable Long id,
             @RequestBody RendezVousUpdateRequest request) {
@@ -105,6 +108,35 @@ public class RendezVousController {
     @PutMapping("/Termine/{idRdv}")
     public RendezVous termineRdv(@PathVariable Long idRdv) {
         return service.terminerRendezVous(idRdv);
+    }
+
+    // ============ DASHBOARD STATS ENDPOINTS ============
+
+    /**
+     * Récupère les statistiques pour le dashboard médecin
+     */
+    @GetMapping("/stats/dashboard/{cabinetId}")
+    public ResponseEntity<DashboardStatsDTO> getDashboardStats(@PathVariable Long cabinetId) {
+        DashboardStatsDTO stats = service.getDashboardStats(cabinetId);
+        return ResponseEntity.ok(stats);
+    }
+
+    /**
+     * Récupère les statistiques des consultations sur les 7 derniers jours
+     */
+    @GetMapping("/stats/consultations-week/{cabinetId}")
+    public ResponseEntity<List<ConsultationStatsDTO>> getConsultationsWeekStats(@PathVariable Long cabinetId) {
+        List<ConsultationStatsDTO> stats = service.getConsultationsWeekStats(cabinetId);
+        return ResponseEntity.ok(stats);
+    }
+
+    /**
+     * Récupère la répartition des types de consultations (par motif) sur les 30 derniers jours
+     */
+    @GetMapping("/stats/types-repartition/{cabinetId}")
+    public ResponseEntity<Map<String, Integer>> getTypesRepartition(@PathVariable Long cabinetId) {
+        Map<String, Integer> repartition = service.getTypesRepartition(cabinetId);
+        return ResponseEntity.ok(repartition);
     }
 
 }

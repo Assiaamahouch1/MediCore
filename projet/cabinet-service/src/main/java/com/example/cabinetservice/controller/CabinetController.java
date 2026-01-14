@@ -95,4 +95,13 @@ public class CabinetController {
                 .contentType(MediaType.IMAGE_JPEG) // ou déterminer dynamiquement
                 .body(resource);
     }
+    // ============ DASHBOARD ADMIN STATS ============
+
+    @GetMapping("/admin/dashboard/stats")
+    public AdminDashboardStatsDTO getDashboardStats() {
+        System.out.println("Endpoint /admin/dashboard/stats appelé");
+        AdminDashboardStatsDTO stats = service.getDashboardStats();
+        System.out.println("Retour des statistiques: " + stats);
+        return stats;
+    }
 }

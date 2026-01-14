@@ -1,9 +1,12 @@
 package com.example.rendezvousservice.service;
 
+import com.example.rendezvousservice.dto.ConsultationStatsDTO;
+import com.example.rendezvousservice.dto.DashboardStatsDTO;
 import com.example.rendezvousservice.model.RendezVous;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -17,7 +20,7 @@ public interface RendezVousService {
     public List<RendezVous> getAll(Long cabinetId);
     public Optional<RendezVous> modifierRendezVousPartiel(
             Long id,
-           Date nouvelleDate,
+            Date nouvelleDate,
             String nouvelleHeure,
             String nouveauMotif,
             String nouvellesNotes,
@@ -28,5 +31,10 @@ public interface RendezVousService {
     public RendezVous marquerCommeArrive(Long idRdv);
     public List<RendezVous> getRendezVousArrives(Long cabinetId);
     RendezVous terminerRendezVous(Long idRdv);
+
+    // Dashboard stats methods
+    DashboardStatsDTO getDashboardStats(Long cabinetId);
+    List<ConsultationStatsDTO> getConsultationsWeekStats(Long cabinetId);
+    Map<String, Integer> getTypesRepartition(Long cabinetId);
 
 }

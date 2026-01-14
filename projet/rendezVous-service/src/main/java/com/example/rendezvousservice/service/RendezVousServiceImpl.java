@@ -2,6 +2,8 @@ package com.example.rendezvousservice.service;
 
 import java.util.*;
 
+import com.example.rendezvousservice.dto.ConsultationStatsDTO;
+import com.example.rendezvousservice.dto.DashboardStatsDTO;
 import com.example.rendezvousservice.model.RendezVous;
 import com.example.rendezvousservice.model.StatutRdv;
 import com.example.rendezvousservice.repository.RendezVousRepository;
@@ -11,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.DayOfWeek;
 
 @Service
 public class RendezVousServiceImpl implements RendezVousService {
@@ -184,7 +188,7 @@ public class RendezVousServiceImpl implements RendezVousService {
     @Override
     public List<RendezVous> getRendezVousArrives(Long cabinetId) {
         List<RendezVous> rdv = repository.findByCabinetIdAndStatut(cabinetId,StatutRdv.ARRIVE);
-       return rdv;
+        return rdv;
     }
 
     @Override
@@ -207,6 +211,108 @@ public class RendezVousServiceImpl implements RendezVousService {
                 .orElseThrow(() -> new RuntimeException("Rendez-vous non trouvé avec l'id: " + idRdv));
         rdv.setStatut(StatutRdv.TERMINE);
         return repository.save(rdv);
+    }
+
+    @Override
+    public DashboardStatsDTO getDashboardStats(Long cabinetId) {
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDate today = LocalDate.now(zone);
+        Date debutJour = Date.from(today.atStartOfDay(zone).toInstant());
+        Date finJour = Date.from(today.atTime(23, 59, 59).atZone(zone).toInstant());
+
+        // Patients en salle d'attente (statut ARRIVE)
+        int patientsEnAttenteSalle = repository.findByCabinetIdAndStatut(cabinetId, StatutRdv.ARRIVE).size();
+
+        // RDV confirmés aujourd'hui
+        int rdvConfirmesAujourdhui = repository.findRdvAujourdhui(cabinetId, StatutRdv.CONFIRME, debutJour, finJour).size();
+
+        // RDV en attente de confirmation
+        int rdvEnAttenteConfirmation = repository.findByCabinetIdAndStatut(cabinetId, StatutRdv.EN_ATTENTE).size();
+
+        // Consultations terminées aujourd'hui (statut TERMINE)
+        int consultationsAujourdhui = repository.findRdvAujourdhui(cabinetId, StatutRdv.TERMINE, debutJour, finJour).size();
+
+        // Total RDV du jour (tous statuts sauf ANNULE)
+        List<RendezVous> allRdvToday = repository.findByCabinetId(cabinetId).stream()
+                .filter(rdv -> {
+                    LocalDate rdvDate = rdv.getDateRdv().toInstant().atZone(zone).toLocalDate();
+                    return rdvDate.equals(today) && rdv.getStatut() != StatutRdv.ANNULE;
+                })
+                .toList();
+        int totalRdvJour = allRdvToday.size();
+
+        return new DashboardStatsDTO(
+                patientsEnAttenteSalle,
+                rdvConfirmesAujourdhui,
+                rdvEnAttenteConfirmation,
+                consultationsAujourdhui,
+                totalRdvJour
+        );
+    }
+
+    @Override
+    public List<ConsultationStatsDTO> getConsultationsWeekStats(Long cabinetId) {
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDate today = LocalDate.now(zone);
+        List<ConsultationStatsDTO> stats = new ArrayList<>();
+
+        // Noms des jours en français
+        String[] jours = {"Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"};
+
+        // Pour chaque jour des 7 derniers jours
+        for (int i = 6; i >= 0; i--) {
+            LocalDate date = today.minusDays(i);
+            Date debutJour = Date.from(date.atStartOfDay(zone).toInstant());
+            Date finJour = Date.from(date.atTime(23, 59, 59).atZone(zone).toInstant());
+
+            // Compter les consultations terminées (TERMINE) pour ce jour
+            int count = repository.findRdvAujourdhui(cabinetId, StatutRdv.TERMINE, debutJour, finJour).size();
+
+            // Obtenir le jour de la semaine
+            DayOfWeek dayOfWeek = date.getDayOfWeek();
+            String jour = jours[dayOfWeek.getValue() - 1]; // -1 car DayOfWeek commence à 1 (Lundi)
+
+            stats.add(new ConsultationStatsDTO(
+                    date.format(DateTimeFormatter.ISO_LOCAL_DATE),
+                    jour,
+                    count
+            ));
+        }
+
+        return stats;
+    }
+
+    @Override
+    public Map<String, Integer> getTypesRepartition(Long cabinetId) {
+        ZoneId zone = ZoneId.systemDefault();
+        LocalDate today = LocalDate.now(zone);
+        LocalDate thirtyDaysAgo = today.minusDays(30);
+
+        // Récupérer tous les RDV du cabinet
+        List<RendezVous> allRdvs = repository.findByCabinetId(cabinetId);
+
+        // Filtrer les RDV des 30 derniers jours avec statut TERMINE
+        List<RendezVous> rdvs = allRdvs.stream()
+                .filter(rdv -> {
+                    if (rdv.getDateRdv() == null || rdv.getStatut() != StatutRdv.TERMINE) {
+                        return false;
+                    }
+                    LocalDate rdvDate = rdv.getDateRdv().toInstant().atZone(zone).toLocalDate();
+                    return !rdvDate.isBefore(thirtyDaysAgo) && !rdvDate.isAfter(today);
+                })
+                .toList();
+
+        // Grouper par motif
+        Map<String, Integer> repartition = new HashMap<>();
+        for (RendezVous rdv : rdvs) {
+            String motif = rdv.getMotif();
+            if (motif == null || motif.trim().isEmpty()) {
+                motif = "Non spécifié";
+            }
+            repartition.put(motif, repartition.getOrDefault(motif, 0) + 1);
+        }
+
+        return repartition;
     }
 
 }
