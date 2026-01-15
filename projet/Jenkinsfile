@@ -6,12 +6,9 @@ pipeline {
         MAVEN_HOME = tool name: 'maven3', type: 'maven'
         PATH = "${JAVA_HOME}\\bin;${MAVEN_HOME}\\bin;${env.PATH}"
 
-        // Configuration SonarQube
         SONAR_HOST_URL = 'http://localhost:9000'
         SONAR_PROJECT_KEY = 'medicore'
         SONAR_PROJECT_NAME = 'MediCore Healthcare Platform'
-        
-        // Dossier racine du projet backend
         PROJECT_DIR = 'projet'
     }
 
@@ -26,14 +23,12 @@ pipeline {
             steps {
                 checkout scm
                 echo "Code recupere avec succes"
-                bat "dir"
-                bat "dir projet"
             }
         }
 
-        stage('Build & Unit Tests') {
+        stage('Build (Skip Tests)') {
             steps {
-                echo "Compilation et tests unitaires..."
+                echo "Compilation sans tests..."
                 dir("${PROJECT_DIR}") {
                     script {
                         def services = [
@@ -49,50 +44,10 @@ pipeline {
 
                         for (service in services) {
                             dir(service) {
-                                bat 'mvn -B clean test -DskipTests'
+                                bat 'mvn -B clean compile -DskipTests'
                             }
                         }
                     }
-                }
-            }
-            post {
-                always {
-                    junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
-                }
-            }
-        }
-
-        stage('Code Coverage (JaCoCo)') {
-            steps {
-                echo "Generation des rapports de couverture..."
-                dir("${PROJECT_DIR}") {
-                    script {
-                        def services = [
-                            'api-gateway',
-                            'auth-service',
-                            'cabinet-service',
-                            'patient-service',
-                            'rendezVous-service',
-                            'facture-service',
-                            'consultation-service',
-                            'medicament-service'
-                        ]
-
-                        for (service in services) {
-                            dir(service) {
-                                bat 'mvn -B jacoco:prepare-agent test jacoco:report -DskipTests'
-                            }
-                        }
-                    }
-                }
-            }
-            post {
-                always {
-                    jacoco(
-                        execPattern: '**/target/jacoco.exec',
-                        classPattern: '**/target/classes',
-                        sourcePattern: '**/src/main/java'
-                    )
                 }
             }
         }
@@ -117,11 +72,10 @@ pipeline {
                             for (service in services) {
                                 dir(service) {
                                     bat """mvn -B sonar:sonar ^
+                                        -DskipTests ^
                                         -Dsonar.projectKey=${SONAR_PROJECT_KEY}-${service} ^
                                         -Dsonar.projectName="${SONAR_PROJECT_NAME} - ${service}" ^
                                         -Dsonar.host.url=${SONAR_HOST_URL} ^
-                                        -Dsonar.java.coveragePlugin=jacoco ^
-                                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml ^
                                         -Dsonar.java.source=17"""
                                 }
                             }
@@ -133,70 +87,9 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                echo "Attente du Quality Gate SonarQube..."
+                echo "Verification Quality Gate..."
                 timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: false
-                }
-            }
-        }
-
-        stage('Package') {
-            steps {
-                echo "Creation des packages..."
-                dir("${PROJECT_DIR}") {
-                    script {
-                        def services = [
-                            'api-gateway',
-                            'auth-service',
-                            'cabinet-service',
-                            'patient-service',
-                            'rendezVous-service',
-                            'facture-service',
-                            'consultation-service',
-                            'medicament-service'
-                        ]
-
-                        for (service in services) {
-                            dir(service) {
-                                bat 'mvn -B -DskipTests package'
-                            }
-                        }
-                    }
-                }
-            }
-            post {
-                success {
-                    archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-                }
-            }
-        }
-
-        stage('Docker Build') {
-            when {
-                branch 'main'
-            }
-            steps {
-                echo "Construction des images Docker..."
-                dir("${PROJECT_DIR}") {
-                    script {
-                        def services = [
-                            'api-gateway',
-                            'auth-service',
-                            'cabinet-service',
-                            'patient-service',
-                            'rendezVous-service',
-                            'facture-service',
-                            'consultation-service',
-                            'medicament-service'
-                        ]
-
-                        for (service in services) {
-                            dir(service) {
-                                bat "docker build -t medicore/${service}:${BUILD_NUMBER} ."
-                                bat "docker tag medicore/${service}:${BUILD_NUMBER} medicore/${service}:latest"
-                            }
-                        }
-                    }
                 }
             }
         }
