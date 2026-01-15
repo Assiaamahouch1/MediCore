@@ -4,7 +4,7 @@ pipeline {
     environment {
         JAVA_HOME = tool name: 'jdk17', type: 'jdk'
         MAVEN_HOME = tool name: 'maven3', type: 'maven'
-        PATH = "${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${env.PATH}"
+        PATH = "${JAVA_HOME}\\bin;${MAVEN_HOME}\\bin;${env.PATH}"
 
         // Configuration SonarQube
         SONAR_HOST_URL = 'http://localhost:9000'
@@ -14,22 +14,21 @@ pipeline {
 
     options {
         timestamps()
-        ansiColor('xterm')
         buildDiscarder(logRotator(numToKeepStr: '20'))
-        timeout(time: 30, unit: 'MINUTES')
+        timeout(time: 45, unit: 'MINUTES')
     }
 
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
-                echo "📥 Code récupéré avec succès"
+                echo "Code recupere avec succes"
             }
         }
 
         stage('Build & Unit Tests') {
             steps {
-                echo "🔨 Compilation et tests unitaires..."
+                echo "Compilation et tests unitaires..."
                 script {
                     def services = [
                         'api-gateway',
@@ -44,7 +43,7 @@ pipeline {
 
                     for (service in services) {
                         dir(service) {
-                            sh 'mvn -B clean test'
+                            bat 'mvn -B clean test'
                         }
                     }
                 }
@@ -58,7 +57,7 @@ pipeline {
 
         stage('Code Coverage (JaCoCo)') {
             steps {
-                echo "📊 Génération des rapports de couverture..."
+                echo "Generation des rapports de couverture..."
                 script {
                     def services = [
                         'api-gateway',
@@ -73,7 +72,7 @@ pipeline {
 
                     for (service in services) {
                         dir(service) {
-                            sh 'mvn -B jacoco:prepare-agent test jacoco:report'
+                            bat 'mvn -B jacoco:prepare-agent test jacoco:report'
                         }
                     }
                 }
@@ -91,7 +90,7 @@ pipeline {
 
         stage('SonarQube Analysis') {
             steps {
-                echo "🔍 Analyse SonarQube en cours..."
+                echo "Analyse SonarQube en cours..."
                 withSonarQubeEnv('SonarQube') {
                     script {
                         def services = [
@@ -107,15 +106,13 @@ pipeline {
 
                         for (service in services) {
                             dir(service) {
-                                sh """
-                                    mvn -B sonar:sonar \
-                                        -Dsonar.projectKey=${SONAR_PROJECT_KEY}-${service} \
-                                        -Dsonar.projectName="${SONAR_PROJECT_NAME} - ${service}" \
-                                        -Dsonar.host.url=${SONAR_HOST_URL} \
-                                        -Dsonar.java.coveragePlugin=jacoco \
-                                        -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml \
-                                        -Dsonar.java.source=17
-                                """
+                                bat """mvn -B sonar:sonar ^
+                                    -Dsonar.projectKey=${SONAR_PROJECT_KEY}-${service} ^
+                                    -Dsonar.projectName="${SONAR_PROJECT_NAME} - ${service}" ^
+                                    -Dsonar.host.url=${SONAR_HOST_URL} ^
+                                    -Dsonar.java.coveragePlugin=jacoco ^
+                                    -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml ^
+                                    -Dsonar.java.source=17"""
                             }
                         }
                     }
@@ -125,7 +122,7 @@ pipeline {
 
         stage('Quality Gate') {
             steps {
-                echo "⏳ Attente du Quality Gate SonarQube..."
+                echo "Attente du Quality Gate SonarQube..."
                 timeout(time: 5, unit: 'MINUTES') {
                     waitForQualityGate abortPipeline: true
                 }
@@ -134,7 +131,7 @@ pipeline {
 
         stage('Package') {
             steps {
-                echo "📦 Création des packages..."
+                echo "Creation des packages..."
                 script {
                     def services = [
                         'api-gateway',
@@ -149,7 +146,7 @@ pipeline {
 
                     for (service in services) {
                         dir(service) {
-                            sh 'mvn -B -DskipTests package'
+                            bat 'mvn -B -DskipTests package'
                         }
                     }
                 }
@@ -166,7 +163,7 @@ pipeline {
                 branch 'main'
             }
             steps {
-                echo "🐳 Construction des images Docker..."
+                echo "Construction des images Docker..."
                 script {
                     def services = [
                         'api-gateway',
@@ -181,8 +178,8 @@ pipeline {
 
                     for (service in services) {
                         dir(service) {
-                            sh "docker build -t medicore/${service}:${BUILD_NUMBER} ."
-                            sh "docker tag medicore/${service}:${BUILD_NUMBER} medicore/${service}:latest"
+                            bat "docker build -t medicore/${service}:${BUILD_NUMBER} ."
+                            bat "docker tag medicore/${service}:${BUILD_NUMBER} medicore/${service}:latest"
                         }
                     }
                 }
@@ -192,13 +189,10 @@ pipeline {
 
     post {
         success {
-            echo '✅ Pipeline terminé avec succès!'
-            // Notification Slack/Email si configuré
-            // slackSend channel: '#ci-cd', color: 'good', message: "Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            echo 'Pipeline termine avec succes!'
         }
         failure {
-            echo '❌ Pipeline échoué!'
-            // slackSend channel: '#ci-cd', color: 'danger', message: "Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}"
+            echo 'Pipeline echoue!'
         }
         always {
             cleanWs()
