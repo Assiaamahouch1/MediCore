@@ -8,6 +8,7 @@ public record CabinetResponse(
         String nom,
         String specialite,
         String adresse,
+        String ville,
         String tel,
         Boolean service_actif,
         LocalDate date_expiration_service

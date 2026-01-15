@@ -13,6 +13,9 @@ public interface CabinetMapper {
     Cabinet toEntity(CabinetCreateRequest req);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "service_actif", ignore = true)
+    @Mapping(target = "date_expiration_service", ignore = true)
     void updateEntity(CabinetUpdateRequest req, @MappingTarget Cabinet cabinet);
 
     CabinetResponse toResponse(Cabinet cabinet);

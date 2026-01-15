@@ -36,7 +36,8 @@ class CabinetServiceTest {
 
     @Test
     void activate_shouldFail_whenExpirationNullOrPast() {
-        Cabinet c = new Cabinet(1L, null, "Cab A", null, null, null, true, null);
+        // Constructor: (id, logo, nom, specialite, adresse, ville, tel, service_actif, date_expiration_service)
+        Cabinet c = new Cabinet(1L, null, "Cab A", null, null, null, null, true, null);
         when(repo.findById(1L)).thenReturn(Optional.of(c));
 
         assertThatThrownBy(() -> service.activate(1L))
@@ -51,7 +52,8 @@ class CabinetServiceTest {
 
     @Test
     void renew_shouldSetFutureExpirationAndActivate() {
-        Cabinet c = new Cabinet(1L, null, "Cab A", null, null, null, false, LocalDate.now().minusDays(10));
+        // Constructor: (id, logo, nom, specialite, adresse, ville, tel, service_actif, date_expiration_service)
+        Cabinet c = new Cabinet(1L, null, "Cab A", null, null, null, null, false, LocalDate.now().minusDays(10));
         when(repo.findById(1L)).thenReturn(Optional.of(c));
         when(repo.save(any())).thenAnswer(inv -> inv.getArgument(0));
 
@@ -63,7 +65,8 @@ class CabinetServiceTest {
 
     @Test
     void status_shouldReturnExpired() {
-        Cabinet c = new Cabinet(1L, null, "Cab A", null, null, null, false, LocalDate.now().minusDays(1));
+        // Constructor: (id, logo, nom, specialite, adresse, ville, tel, service_actif, date_expiration_service)
+        Cabinet c = new Cabinet(1L, null, "Cab A", null, null, null, null, false, LocalDate.now().minusDays(1));
         when(repo.findById(1L)).thenReturn(Optional.of(c));
 
         SubscriptionStatusResponse status = service.status(1L);
