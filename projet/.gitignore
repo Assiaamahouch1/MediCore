@@ -5,6 +5,7 @@
 /tmp
 /out-tsc
 /bazel-out
+Medicore_frontend/
 
 # Node
 /node_modules
